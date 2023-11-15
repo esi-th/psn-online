@@ -1,0 +1,9 @@
+venv/
+db.sqlite3
+.idea/
+README.md
+.vscode/
+staticfiles/
+.env
+media/
+
