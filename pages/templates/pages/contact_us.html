@@ -1,0 +1,14 @@
+{% extends '_base.html' %}
+
+{% block title %}
+{% endblock %}
+
+{% block content %}
+    <h1>Contact Us</h1>
+    <form action="{% url 'contact_us' %}" method="POST">
+        {% csrf_token %}
+        {{ contact_us_form.as_p }}
+        <input type="submit" value="Send Message">
+    </form>
+{% endblock %}
+
