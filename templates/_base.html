@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+    <meta charset="UTF-8">
     <title>{% block title %}
 
     {% endblock %}</title>
@@ -9,11 +9,32 @@
 <body>
 <a href="{% url 'home' %}">Home</a>
 <span>
+    <a href="{% url 'blog:posts_list' %}">Blog</a>
+</span>
+<span>
     <a href="{% url 'about_us' %}">About Us</a>
 </span>
 <span>
     <a href="{% url 'contact_us' %}">Contact Us</a>
 </span>
+<br>
+{% if user.is_authenticated %}
+    <p> Hello, {{ user.email }} | <a href="{% url 'account_logout' %}">Logout</a></p>
+{% else %}
+    <a href="{% url 'account_login' %}">Login</a>
+    <span>
+    <a href="{% url 'account_signup' %}">Signup</a>
+</span>
+{% endif %}
+
+{% if messages %}
+    <div>
+        {% for message in messages %}
+            <div>{{ message.tags }} | {{ message }}</div>
+        {% endfor %}
+    </div>
+{% endif %}
+
 {% block content %}
 {% endblock %}
 </body>

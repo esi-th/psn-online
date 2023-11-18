@@ -1,0 +1,53 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ post.title }}</h1>
+    <a>Category: {{ post.category }}</a> |
+    <span>
+    <a>Author: {{ post.author }}</a> |
+    </span>
+    <spam>
+        <a>{{ post.comments.all.count }} Comments</a> |
+    </spam>
+    <span>
+    <a>Published Date: {{ post.datetime_created }}</a> |
+    </span>
+    <span>
+    <a>{{ likes }} Likes</a>
+    </span>
+    <p>{{ post.content }}</p>
+    Tags:
+    {% for tag in post.tags.all %}
+        <span>
+     <a>{{ tag.name }}</a> |
+        </span>
+    {% endfor %}
+    <br>
+    <form action="{% url 'blog:like_post' post.id %}">
+        <button type="submit">Like</button>
+    </form>
+    <br>
+    <h2>Comments</h2>
+    {% for comment in comments%}
+        <a>{{ comment.author }}</a> |
+        <span>
+        <a>{{ comment.datetime_created }}</a>
+        </span>
+        <span><a href="{% url 'blog:reply_to_comment' comment.id %}">Reply</a></span>
+        <p>{{ comment.body }}</p>
+        {% for reply in comment.replies.all %}
+            <p style="margin-left: 20px;">{{ reply.author }} | {{ reply.datetime_created }}</p>
+            <p style="margin-left: 20px;">{{ reply.body }}</p>
+        {% endfor %}
+    {% endfor %}
+    <br>
+    <form method="POST" action="{% url 'blog:comment_create' post.id %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" value="Submit Comment">
+    </form>
+{% endblock %}

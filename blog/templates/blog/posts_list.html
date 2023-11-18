@@ -1,0 +1,33 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Posts
+{% endblock %}
+
+{% block content %}
+    <h1>Post List</h1>
+    Categories:
+    {% for cat in categories %}
+        <span>
+        {{ cat.name }} |
+        </span>
+    {% endfor %}
+    {% for post in posts %}
+        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+        <a>Author: {{ post.author }}</a>
+        <span>
+        <a>Published Date: {{ post.datetime_created }}</a>
+        </span>
+        <span>
+        <a>Likes: {{ post.likes }}</a>
+        </span>
+    {% endfor %}
+    <br>
+    {% if posts.has_previous %}
+        <a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}">Previous Page</a>
+    {% endif %}
+    <a>{{ posts }} | {{ posts.number }} | </a>
+    {% if posts.has_next %}
+        <a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}">Next Page</a>
+    {% endif %}
+{% endblock %}

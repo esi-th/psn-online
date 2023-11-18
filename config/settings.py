@@ -38,8 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    # third party
+    'allauth',
+    'allauth.account',
+
     # local
     'pages',
+    'accounts',
+    'blog',
 ]
 
 MIDDLEWARE = [
@@ -50,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -107,6 +114,27 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+AUTH_USER_MODEL = 'accounts.CustomUser'
+SITE_ID = 1
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
 
 
 # Internationalization
