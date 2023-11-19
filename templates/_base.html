@@ -7,18 +7,21 @@
     {% endblock %}</title>
 </head>
 <body>
-<a href="{% url 'home' %}">Home</a>
+<a href="{% url 'home' %}">Home</a> |
 <span>
-    <a href="{% url 'products:products_list' %}">Products</a>
+    <a href="{% url 'products:products_list' %}">Products</a> |
 </span>
 <span>
-    <a href="{% url 'blog:posts_list' %}">Blog</a>
+    <a href="{% url 'blog:posts_list' %}">Blog</a> |
 </span>
 <span>
-    <a href="{% url 'about_us' %}">About Us</a>
+    <a href="{% url 'about_us' %}">About Us</a> |
 </span>
 <span>
-    <a href="{% url 'contact_us' %}">Contact Us</a>
+    <a href="{% url 'contact_us' %}">Contact Us</a> |
+</span>
+<span>
+        <a href="{% url 'cart:cart_detail' %}">Cart</a>
 </span>
 <br>
 {% if user.is_authenticated %}

@@ -18,9 +18,16 @@
     {% endfor %}
     <br>
     <a>Inventory: {{ product.inventory }}</a>
-    <form>
-        <input type="number" min="1" max="30">
-        <input type="button" value="Add To Cart">
+    <form action="{% url 'cart:cart_add' product.id %}" method="POST">
+    {% csrf_token %}
+        <input type="number" name="quantity" min="1" max="30">
+        <select name="name" id="id_name">
+          <option value="ng" selected="">No Guarantee</option>
+          <option value="1y">1 Years Guarantee</option>
+          <option value="2y">2 Years Guarantee</option>
+          <option value="3y">3 Years Guarantee</option>
+        </select>
+        <input type="submit" value="Add To Cart">
     </form>
     <ul>
         {% for key, value in product.features.items %}
