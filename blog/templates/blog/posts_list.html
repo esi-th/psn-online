@@ -26,7 +26,7 @@
     {% if posts.has_previous %}
         <a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}">Previous Page</a>
     {% endif %}
-    <a>{{ posts }} | {{ posts.number }} | </a>
+    <a>{{ posts }} | {{ posts.number }} |</a>
     {% if posts.has_next %}
         <a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}">Next Page</a>
     {% endif %}

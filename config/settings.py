@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -46,6 +47,8 @@ INSTALLED_APPS = [
     'pages',
     'accounts',
     'blog',
+    'products',
+
 ]
 
 MIDDLEWARE = [
@@ -158,3 +161,29 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JAZZMIN_SETTINGS = {
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "accounts.CustomUser": "fas fa-user-secret",
+        "auth.Group": "fas fa-users",
+        "products.Product": "fas fa-shopping-cart",
+        "products.Comment": "fas fa-comments",
+        "orders.Order": "fas fa-shopping-bag",
+        "orders.OrderItem": "fas fa-tasks",
+        "pages.ContactUs": "fas fa-envelope",
+        "blog.Post": "fas fa-sticky-note",
+        "blog.Comment": "fas fa-comments",
+        "blog.Category": "fas fa-list",
+        "blog.Tag": "fas fa-tags",
+        "products.Tag": "fas fa-tags",
+        "products.Category": "fas fa-list",
+        "products.Color": "fas fa-palette",
+        "products.Company": "fas fa-building",
+        "products.Discount": "fas fa-percent",
+        "products.Guarantee": "fas fa-scroll",
+        "products.ProductModel": "fab fa-buromobelexperte",
+        "products.Review": "fas fa-search",
+
+    },
+}

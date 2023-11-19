@@ -1,0 +1,35 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    Products
+{% endblock %}
+
+{% block content %}
+    <h1>Products List</h1>
+    <form action="{% url 'products:product_search' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="searched">
+    <input type="submit" value="Search">
+    </form>
+    Categories:
+        {% for cat in categories %}
+        <span>
+        {{ cat.name }} |
+        </span>
+    {% endfor %}
+    {% for product in products %}
+        <h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
+        <a>Price: {{ product.price }}</a>
+        <span>
+        <a>Category: {{ product.category }}</a>
+        </span>
+        <br>
+    {% endfor %}
+        {% if products.has_previous %}
+        <a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}">Previous Page</a>
+    {% endif %}
+    <a>{{ products }} | {{ products.number }} | </a>
+    {% if products.has_next %}
+        <a href="{% url 'products:products_list' %}?page={{ products.next_page_number }}">Next Page</a>
+    {% endif %}
+{% endblock %}

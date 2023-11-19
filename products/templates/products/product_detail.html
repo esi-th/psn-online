@@ -1,0 +1,62 @@
+{% extends '_base.html' %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+{% block content %}
+    <h3>{{ product.title }}</h3>
+    <a>{{ product.company }} | {{ product.model }} | {{ product.category }} |
+        Comments: {{ product.product_comments.all.count }} | Reviews: {{ product.reviews.all.count }}</a>
+    <br>
+    <p>{{ product.description }}</p>
+    <br>
+    <a>Price: {{ product.price }} Toman</a>
+    <br>
+    {% for color in product.colors.all %}
+        <a>Color: {{ color.name }}</a>
+    {% endfor %}
+    <br>
+    <a>Inventory: {{ product.inventory }}</a>
+    <form>
+        <input type="number" min="1" max="30">
+        <input type="button" value="Add To Cart">
+    </form>
+    <ul>
+        {% for key, value in product.features.items %}
+            <li><strong>{{ key }}:</strong> {{ value }}</li>
+        {% endfor %}
+    </ul>
+    Tags:
+    {% for tag in product.tags.all %}
+        <span><a>{{ tag }}</a></span>
+    {% endfor %}
+    <h2>Comments</h2>
+    {% for comment in comments %}
+        <a>Author: {{ comment.author }} | Date: {{ comment.datetime_created }}</a>
+        <span><a href="{% url 'blog:reply_to_comment' comment.id %}">Reply</a></span>
+        <p>{{ comment.body }}</p>
+        {% for reply in comment.replies.all %}
+            <p style="margin-left: 20px;">{{ reply.author }} | {{ reply.datetime_created }}</p>
+            <p style="margin-left: 20px;">{{ reply.body }}</p>
+        {% endfor %}
+    {% endfor %}
+    <h3>Leave Your Comment</h3>
+    <form method="POST" action="{% url 'products:comment_create' product.id %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="submit" value="Submit Comment">
+    </form>
+    <h2>Reviews</h2>
+    {% for review in product.reviews.all %}
+        <a>Author: {{ review.author }} | Date: {{ review.datetime_created }}</a>
+        <p>{{ review.body }}</p>
+        <p>{{ review.recommend }} | {{ review.stars }}</p>
+    {% endfor %}
+    <h3>Leave Your Review</h3>
+    <form method="POST" action="{% url 'products:review_create' product.id %}">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <input type="submit" value="Submit Comment">
+    </form>
+{% endblock %}
