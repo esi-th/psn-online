@@ -22,4 +22,5 @@
     </div>
     <br>
     <p>Total Cart Price: {{ cart.get_total_price }}</p>
+    <a href="{% url 'orders:order_create' %}">Create Order</a>
 {% endblock %}

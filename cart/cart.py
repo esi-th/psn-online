@@ -24,7 +24,7 @@ class Cart:
             self.cart[product_id] = {'quantity': 0}
 
         if guarantee_name == 'ng':
-            self.cart[product_id]['product_guarantee'] = 'No Guarantee'
+            self.cart[product_id]['product_guarantee'] = 'na'
             self.cart[product_id]['guarantee_price'] = 0
             self.cart[product_id]['guarantee_description'] = ''
         else:

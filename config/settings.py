@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     # third party
     'allauth',
     'allauth.account',
+    "phonenumber_field",
 
     # local
     'pages',
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
     'blog',
     'products',
     'cart',
+    'orders',
 
 ]
 
