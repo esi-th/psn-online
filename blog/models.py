@@ -28,6 +28,7 @@ class Post(models.Model):
     ]
     title = models.CharField('Title', max_length=255)
     content = models.TextField('Content')
+    cover = models.ImageField('Cover', upload_to='post_covers/', blank=True)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Author')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category')
     status = models.CharField('Status', max_length=2, choices=POST_STATUS_CHOICES, default=POST_STATUS_DRAFT)

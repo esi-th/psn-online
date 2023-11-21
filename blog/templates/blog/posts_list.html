@@ -5,29 +5,124 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Post List</h1>
-    Categories:
-    {% for cat in categories %}
-        <span>
-        {{ cat.name }} |
-        </span>
-    {% endfor %}
-    {% for post in posts %}
-        <h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
-        <a>Author: {{ post.author }}</a>
-        <span>
-        <a>Published Date: {{ post.datetime_created }}</a>
-        </span>
-        <span>
-        <a>Likes: {{ post.likes }}</a>
-        </span>
-    {% endfor %}
-    <br>
-    {% if posts.has_previous %}
-        <a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}">Previous Page</a>
-    {% endif %}
-    <a>{{ posts }} | {{ posts.number }} |</a>
-    {% if posts.has_next %}
-        <a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}">Next Page</a>
-    {% endif %}
+        <!-- HEADING-BANNER START -->
+    <div class="heading-banner-area overlay-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-banner">
+                        <div class="heading-banner-title">
+                            <h2>بلاگ</h2>
+                        </div>
+                        <div class="breadcumbs pb-15">
+                            <ul>
+                                <li><a href="{% url 'home' %}">خانه</a></li>
+                                <li>بلاگ</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADING-BANNER END -->
+    <!-- BLGO-AREA START -->
+    <div dir="rtl" class="blog-area blog-2  pt-80 pb-80">
+        <div class="container">
+            <div class="blog">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="product-option mb-30 clearfix">
+                            <!-- Categories start -->
+                            <div class="dropdown floatleft">
+                                <button class="option-btn active" data-bs-toggle="dropdown">
+                                    دسته بندی ها
+                                </button>
+                                <div class="dropdown-menu dropdown-width">
+                                    <!-- Widget-Categories start -->
+                                    <aside class="widget widget-categories">
+                                        <div class="widget-title">
+                                            <h4>دسته بندی ها</h4>
+                                        </div>
+                                        <div id="cat-treeview" class="widget-info product-cat boxscrol2">
+                                            <ul>
+                                                {% for cat in categories %}
+                                                    <li><span>{{ cat }}</span>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    </aside>
+                                    <!-- Widget-categories end -->
+                                </div>
+                            </div>
+                            <!-- Categories end -->
+                            <div class="showing text-end d-none d-md-block">
+                                <p class="mb-0"> نمایش صفحه {{ posts.number }}, از {{ posts.paginator.num_pages}} صفحه </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    {% for post in posts %}
+                        <!-- Single-blog start -->
+                        <div class="col-lg-4 col-md-6">
+                            <div class="single-blog mb-30">
+                                <div class="blog-photo">
+                                    {% if post.cover %}
+                                    <a href="{{ post.get_absolute_url }}"><img src="{{ post.cover.url }}" alt=""/></a>
+                                    {% endif %}
+                                    <div class="like-share text-center fix">
+                                        <a href="#"><i
+                                                class="zmdi zmdi-collection-text"></i><span> نویسنده: {{ post.author }}</span></a>
+                                        <a href="#"><i
+                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count }}</span></a>
+                                        <a href="#"><i
+                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count }}</span></a>
+                                    </div>
+                                </div>
+                                <div class="blog-info">
+                                    <div class="post-meta fix">
+                                        <div class="post-date floatleft"><span
+                                                class="text-dark-red">{{ post.datetime_created.day }}</span></div>
+                                        <div class="post-year floatleft">
+                                            <p class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|date:"F" }}, {{ post.datetime_created.year }}</p>
+                                            <h4 class="post-title"><a href="{{ post.get_absolute_url }}"
+                                                                      tabindex="0">{{ post.title }}</a></h4>
+                                        </div>
+                                    </div>
+                                    <p>{{ post.content|truncatewords:29 }}</p>
+                                    <a href="{{ post.get_absolute_url }}" class="button-2 text-dark-red">ادامه مطلب...</a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Single-blog end -->
+                    {% endfor %}
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- Pagination start -->
+                        <div class="shop-pagination  text-center">
+                            <div class="pagination">
+                                <ul>
+                                    {% if posts.has_previous %}
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}">{{ posts.previous_page_number }}</a></li>
+                                        <li><a class="active" href="#">{{ posts.number }}</a></li>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+                                    {% endif %}
+                                    {% if posts.has_next %}
+                                        <li><a class="active" href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}">{{ posts.next_page_number }}</a></li>
+                                        <li><a class="active" href="#">{{ posts.number }}</a></li>
+                                    {% endif %}
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Pagination end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- BLGO-AREA END -->
 {% endblock %}

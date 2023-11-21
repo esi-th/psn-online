@@ -5,49 +5,257 @@
 {% endblock %}
 
 {% block content %}
-    <h1>{{ post.title }}</h1>
-    <a>Category: {{ post.category }}</a> |
-    <span>
-    <a>Author: {{ post.author }}</a> |
-    </span>
-    <spam>
-        <a>{{ post.comments.all.count }} Comments</a> |
-    </spam>
-    <span>
-    <a>Published Date: {{ post.datetime_created }}</a> |
-    </span>
-    <span>
-    <a>{{ likes }} Likes</a>
-    </span>
-    <p>{{ post.content }}</p>
-    Tags:
-    {% for tag in post.tags.all %}
-        <span>
-     <a>{{ tag.name }}</a> |
-        </span>
-    {% endfor %}
-    <br>
-    <form action="{% url 'blog:like_post' post.id %}">
-        <button type="submit">Like</button>
-    </form>
-    <br>
-    <h2>Comments</h2>
-    {% for comment in comments%}
-        <a>{{ comment.author }}</a> |
-        <span>
-        <a>{{ comment.datetime_created }}</a>
-        </span>
-        <span><a href="{% url 'blog:reply_to_comment' comment.id %}">Reply</a></span>
-        <p>{{ comment.body }}</p>
-        {% for reply in comment.replies.all %}
-            <p style="margin-left: 20px;">{{ reply.author }} | {{ reply.datetime_created }}</p>
-            <p style="margin-left: 20px;">{{ reply.body }}</p>
-        {% endfor %}
-    {% endfor %}
-    <br>
-    <form method="POST" action="{% url 'blog:comment_create' post.id %}">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <input type="submit" value="Submit Comment">
-    </form>
+    <!-- HEADING-BANNER START -->
+    <div dir="rtl" class="heading-banner-area overlay-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-banner">
+                        <div class="heading-banner-title">
+                            <h2>{{ post.title }}</h2>
+                        </div>
+                        <div class="breadcumbs pb-15">
+                            <ul>
+                                <li><a href="{% url 'blog:posts_list' %}">Blog</a></li>
+                                <li>{{ post.title }}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADING-BANNER END -->
+    <!-- BLGO-AREA START -->
+    <div class="blog-area blog-2 blog-details-area  pt-80 pb-80">
+        <div class="container">
+            <div class="blog">
+                <div class="row">
+                    <!-- Single-blog start -->
+                    <div class="col-lg-12">
+                        <div class="single-blog mb-30">
+                            <div dir="rtl" class="blog-photo">
+                                <a href="#"><img src="{{ post.cover.url }}" alt=""/></a>
+                                <div class="like-share fix">
+                                    <a href="#"><i
+                                            class="zmdi zmdi-account"></i><span> نویسنده: {{ post.author }}</span></a>
+                                    <a href="#"><i
+                                            class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count }}</span></a>
+                                    <a href="#"><i
+                                            class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count }}</span></a>
+                                    <a class="d-none d-md-block" href="#"><i class="zmdi zmdi-format-list-bulleted"></i><span> دسته بندی: {{ post.category }}</span></a>
+                                </div>
+                                <div class="post-date post-date-2">
+                                    <span class="text-dark-red">{{ post.datetime_created.day }}</span>
+                                    <span class="text-dark-red text-uppercase">{{ post.datetime_created|date:"M" }}</span>
+                                </div>
+                            </div>
+                            <div class="blog-info blog-details-info">
+                                <h4 dir="rtl" class="post-title post-title-2"><a href="#">{{ post.title }}</a></h4>
+                                <p dir="rtl">{{ post.content }}</p>
+                                {% if user.is_authenticated %}
+                                <div>
+                                    <br>
+                                    <a style="float: right;" href="{% url 'blog:like_post' post.id %}">
+                                        {{ post.likes.count }}
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                             fill="currentColor"
+                                             class="bi bi-hand-thumbs-up" viewBox="0 0 16 16">
+                                            <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+                                        </svg>
+                                        پسندیدن
+                                    </a>
+                                    <br>
+                                </div>
+                                {% endif %}
+                            </div>
+                            <div class="post-share-tag clearfix mt-40">
+                                <div class="post-share floatright">
+                                    <span class="text-uppercase"><strong>اشتراک گذاری</strong></span>
+                                    <a href="#"><i class="zmdi zmdi-facebook"></i></a>
+                                    <a href="#"><i class="zmdi zmdi-twitter"></i></a>
+                                    <a href="#"><i class="zmdi zmdi-linkedin"></i></a>
+                                    <a href="#"><i class="zmdi zmdi-vimeo"></i></a>
+                                    <a href="#"><i class="zmdi zmdi-dribbble"></i></a>
+                                    <a href="#"><i class="zmdi zmdi-instagram"></i></a>
+                                </div>
+                                <div dir="rtl" class="post-share post-tag floatleft">
+                                    <span class="text-uppercase"><strong>تگ های مرتبط: </strong></span>
+                                    {% for name in post.tags.all %}
+                                        <a>{{ name }}</a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div dir="rtl" class="author-comments clearfix mt-4">
+                                <div class="author-photo floatright ml-15">
+                                    <img src="{{ post.author.profile_picture.url }}" alt=""/>
+                                </div>
+                                <div class="author-brief mr-70">
+                                    <h3 class="font-16px"><strong>{{ post.author }}</strong></h3>
+                                    <p>{{ post.author.about_me }}</p>
+                                </div>
+                            </div>
+                            <div class="pro-reviews mt-60">
+                                <div class="customer-review mb-60">
+                                    {% if comments %}
+                                        <u><h3 dir="rtl" class="tab-title title-border mb-30">{{ post.comments.all.count }}
+                                            نظر برای {{ post.title }}</h3></u>
+                                        <ul class="product-comments clearfix">
+                                            {% for comment in comments %}
+                                                <li class="mb-30 mt-10 mb-20">
+                                                    <div class="author-photo floatleft mr-15">
+                                                        <img src="{{ comment.author.profile_picture.url }}" alt=""/>
+                                                    </div>
+                                                    <div class="pro-reviewer-comment ">
+                                                        <div class="fix">
+                                                            <div class="floatleft mbl-center">
+                                                                <h5 class="text-uppercase mb-0">
+                                                                    <strong>{{ comment.author }}</strong>
+                                                                </h5>
+                                                                <p class="reply-date">{{ comment.datetime_created }}</p>
+                                                            </div>
+                                                            {% if user.is_authenticated %}
+                                                            <div class="comment-reply floatright">
+                                                                <a href="#"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                            </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <p class="mb-0">{{ comment.body }}</p>
+                                                    </div>
+                                                    <div class="reply-box" style="display: none;">
+                                                        <form action="{% url 'blog:reply_to_comment' comment.id %}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                            <textarea dir="rtl" class="custom-textarea" name="body"
+                                                                      placeholder="متن ریپلای ..."></textarea>
+                                                                    <button type="submit" data-text="ارسال"
+                                                                            class="button-one submit-button mt-20 floatright">
+                                                                        ثبت نظر
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                                {% for reply in comment.replies.all %}
+                                                    <li class="threaded-comments mb-20">
+                                                    <div class="author-photo floatleft ml-20">
+                                                        <img src="{{ reply.author.profile_picture.url }}" alt=""/>
+                                                    </div>
+                                                    <div class="pro-reviewer-comment mb-10">
+                                                        <div class="fix">
+                                                            <div class="floatleft mbl-center ml-10">
+                                                                <h5 class="text-uppercase mb-0">
+                                                                    <strong>{{ reply.author }}</strong>
+                                                                </h5>
+                                                                Replied To: {{ comment.author }}
+                                                                <p class="reply-date">{{ reply.datetime_created }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="mb-0 ml-10">{{ reply.body }}</p>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <div class="reply-box" style="display: none;">
+                                                <form action="#">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="text" placeholder="Your name here..."
+                                                                   name="reply-name"/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" placeholder="Your email here..."
+                                                                   name="reply-email"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <textarea class="custom-textarea" name="reply-message"
+                                                                      placeholder="Your reply here..."></textarea>
+                                                            <button type="submit" data-text="submit reply"
+                                                                    class="button-one submit-button mt-20">submit reply
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </li>
+                                        </ul>
+                                    {% else %}
+                                        <div class="text-center">
+                                            <h6 class="text-uppercase mb-0"><strong>.نظری برای این پست یافت نشد</strong>
+                                            </h6>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% if user.is_authenticated %}
+                                    <div class="leave-review">
+                                        <h3 dir="rtl" class="tab-title title-border mb-30">نظر خود را بنویسید</h3>
+                                        <div class="reply-box">
+                                            <form action="{% url 'blog:comment_create' post.id %}" method="POST">
+                                                {% csrf_token %}
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                    <textarea dir="rtl" class="custom-textarea mt-10" name="body"
+                                                              placeholder="متن نظر ..."></textarea>
+                                                        <button type="submit" data-text="ارسال"
+                                                                class="button-one submit-button mt-20 floatright">ثبت
+                                                            نظر
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    {% else %}
+                                    <div class="text-center" dir="rtl">
+                                        <h6 class="text-uppercase mb-0"><strong>برای ثبت نظر ابتدا باید وارد
+                                            شوید!</strong></h6>
+                                        <div class="mt-20">
+                                            <button href="" type="submit" data-text="ورود/ثبت نام"
+                                                    class="submit-button submit-btn-2 button-one">ورود/ثبت نام
+                                            </button>
+                                            <br>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single-blog end -->
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- BLGO-AREA END -->
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const newCommentForm = document.querySelector(".leave-review .reply-box");
+            const replyButtons = document.querySelectorAll(".comment-reply a:nth-child(1)");
+            const replyForms = document.querySelectorAll(".reply-box");
+
+            replyButtons.forEach((button, index) => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const currentForm = replyForms[index];
+                    const isDisplayed = getComputedStyle(currentForm).display;
+
+                    if (isDisplayed === "block") {
+                        currentForm.style.display = "none";
+                    } else {
+                        replyForms.forEach(form => form.style.display = "none");
+                        currentForm.style.display = "block";
+                    }
+                    newCommentForm.style.display = "block";
+                });
+            });
+        });
+    </script>
+
+
+
 {% endblock %}

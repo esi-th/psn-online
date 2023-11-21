@@ -3,6 +3,7 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 from .models import Post, Category, Comment
@@ -13,7 +14,7 @@ def post_list_view(request):
     posts = Post.objects.all().order_by('-datetime_created')
     categories = Category.objects.all()
 
-    paginator = Paginator(posts, 2)
+    paginator = Paginator(posts, 3)
     page_num = request.GET.get('page')
 
     try:
@@ -59,19 +60,19 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 @login_required
+@require_POST
 def reply_to_comment(request, comment_id):
     parent_comment = get_object_or_404(Comment, id=comment_id)
     post = parent_comment.post
-
-    if request.method == 'POST':
-        form = NewCommentForm(request.POST)
-        if form.is_valid():
-            new_comment = form.save(commit=False)
-            new_comment.post = post
-            new_comment.reply_to = parent_comment
-            new_comment.save()
-
-    return reverse('post_detail', args=[comment_id])
+    form = NewCommentForm(request.POST)
+    if form.is_valid():
+        new_comment = form.save(commit=False)
+        new_comment.post = post
+        new_comment.author = request.user
+        new_comment.reply_to = parent_comment
+        new_comment.save()
+        HttpResponseRedirect(reverse('blog:post_detail', args=[post.id]))
+    return HttpResponseRedirect(reverse('blog:post_detail', args=[post.id]))
 
 
 @login_required
