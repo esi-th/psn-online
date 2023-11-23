@@ -5,9 +5,89 @@
 {% endblock %}
 
 {% block content %}
-    <form method="POST" action="{% url 'orders:order_create' %}">
-    {% csrf_token %}
-    {{ order_create_form.as_p }}
-    <input type="submit" value="Place Order">
-    </form>
+			<!-- CHECKOUT-AREA START -->
+			<div class="shopping-cart-area  pt-80 pb-80">
+				<div class="container">
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="shopping-cart">
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<!-- check-out start -->
+									<div class="tab-pane active" id="check-out">
+											<div class="shop-cart-table check-out-wrap">
+												<div class="row">
+                                                    <div dir="rtl" class="col-md-7">
+														<div class="our-order payment-details mt-60 pr-5">
+															<h4 class="title-1 title-border text-uppercase mb-30">فاکتور سفارش</h4>
+															<table>
+                                                            <style>
+                                                                .wider-column {
+                                                                    width: 25%;
+                                                                }
+                                                            </style>
+																<thead>
+																	<tr>
+																		<th class=""><strong>محصول</strong></th>
+                                                                        <th><strong>تعداد</strong></th>
+                                                                        <th><strong>گارانتی</strong></th>
+																		<th class="text-end wider-column"><strong>جمع کل</strong></th>
+																	</tr>
+																</thead>
+																<tbody>
+                                                                {% for item in cart %}
+																	<tr>
+																		<td>{{ item.product_obj.title }}</td>
+																		<td>{{ item.quantity }}</td>
+                                                                        <td>{{ item.guarantee_name }} + {{ item.guarantee_desc|truncatewords:3 }}</td>
+                                                                        <td>{{ item.total_price }} تومان </td>
+																	</tr>
+                                                                {% endfor %}
+                                                                    <tr>
+                                                                        <td>گارانتی خدمات</td>
+                                                                        <td></td>
+                                                                        <td></td>
+																		<td class="text-end">{{ cart.get_guaranties_total_price }} تومان </td>
+                                                                    </tr>
+                                                                <tr>
+																		<td>مبلغ قابل پرداخت</td>
+                                                                        <td></td>
+                                                                        <td></td>
+																		<td class="text-end">{{ cart.get_total_price }} تومان </td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+													</div>
+													<div dir="rtl" class="col-md-5 mt-xs-30">
+														<div class="billing-details pl-20">
+															<h4 class="title-1 title-border text-uppercase mb-30">فرم سفارش</h4>
+                                                            <form method="POST" action="{% url 'orders:order_create' %}">
+                                                                {% csrf_token %}
+															<input name="first_name" type="text" placeholder="نام">
+                                                            <input name="last_name" type="text" placeholder="نام خانوادگی">
+															<input name="phone_number" type="text" placeholder="شماره موبایل">
+															<select name="city" class="custom-select mb-15">
+																<option value="teh">تهران</option>
+																<option value="shz">شیراز</option>
+																<option value="esf">اصفهان</option>
+															</select>
+															<textarea name="address" class="custom-textarea" placeholder="آدرس دقیق" ></textarea>
+                                                            <textarea name="note" class="custom-textarea" placeholder="توضیحات سفارش" ></textarea>
+                                                                <button type="submit" data-text="ثبت سفارش"
+                                                                    class="button-one submit-button mt-30 floatleft">ثبت سفارش</button>
+                                                            </form>
+														</div>
+													</div>
+												</div>
+											</div>
+									</div>
+									<!-- check-out end -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- CHECKOUT-AREA END -->
 {% endblock %}

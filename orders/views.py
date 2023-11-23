@@ -30,7 +30,7 @@ def order_create_view(request):
                     product=product,
                     quantity=item['quantity'],
                     price=product.price,
-                    guarantee=item['product_guarantee'],
+                    guarantee=item['guarantee_name'],
                 )
             order_obj.price = cart_total_price
             order_obj.save()

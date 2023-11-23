@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import AddProductToCartForm
 from .cart import Cart
 from products.models import Product
+from django.contrib import messages
 
 
 def cart_detail_view(request):
@@ -47,5 +48,6 @@ def clear_cart_view(request):
 
     if cart:
         cart.clear()
+        messages.success(request, "All Cart Items Removed Successfully.")
 
     return redirect('cart:cart_detail')

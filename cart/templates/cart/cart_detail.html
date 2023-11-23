@@ -115,9 +115,9 @@
                                                 <h4 dir="rtl" class="title-1 title-border text-uppercase">کد تخفیف</h4>
                                                 <p dir="rtl" class="text-gray">اگر کد تخفیف دارید در این قسمت وارد کنید:</p>
                                                 <input dir="rtl" type="text" placeholder="کد تخفیف شما...">
-                                                <button type="submit" data-text="ثبت سفارش"
-                                                        class="button-one submit-button mt-15">ثبت سفارش
-                                                </button>
+                                                <button onclick="window.location.href = '{% url 'orders:order_create' %}'"
+                                                        type="button" data-text="ثبت سفارش" class="button-one submit-button mt-15">
+                                                    ثبت سفارش</button>
                                                 <button type="submit" data-text="اعمال کد تخفیف"
                                                         class="button-one submit-button mt-15 floatright">اعمال کد تخفیف
                                                 </button>
@@ -141,7 +141,7 @@
                                                         <td dir="rtl" class="text-left">مالیات</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="" class="text-end">{{ cart.get_total_price }} تومان </td>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price }} تومان </td>
                                                         <td dir="rtl" class="text-left">جمع کل فاکتور</td>
                                                     </tr>
                                                     </tbody>

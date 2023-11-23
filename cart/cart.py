@@ -79,7 +79,6 @@ class Cart:
         clear the cart from every product
         """
         del self.session['cart']
-        messages.success(self.request, "All Cart Items Removed Successfully.")
         self.save()
 
     def __len__(self):
