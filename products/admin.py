@@ -46,6 +46,11 @@ class CommentAdmin(admin.ModelAdmin):
     list_display = ['author', 'product', 'status', 'datetime_modified', ]
 
 
+@admin.register(models.ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    list_display = ['product']
+
+
 admin.site.register(models.Tag)
 admin.site.register(models.Color)
 admin.site.register(models.Company)

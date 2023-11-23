@@ -5,65 +5,485 @@
 {% endblock %}
 
 {% block content %}
-    <h3>{{ product.title }}</h3>
-    <a>{{ product.company }} | {{ product.model }} | {{ product.category }} |
-        Comments: {{ product.product_comments.all.count }} | Reviews: {{ product.reviews.all.count }}</a>
-    <br>
-    <p>{{ product.description }}</p>
-    <br>
-    <a>Price: {{ product.price }} Toman</a>
-    <br>
-    {% for color in product.colors.all %}
-        <a>Color: {{ color.name }}</a>
-    {% endfor %}
-    <br>
-    <a>Inventory: {{ product.inventory }}</a>
-    <form action="{% url 'cart:cart_add' product.id %}" method="POST">
-    {% csrf_token %}
-        <input type="number" name="quantity" min="1" max="30">
-        <select name="name" id="id_name">
-          <option value="ng" selected="">No Guarantee</option>
-          <option value="1y">1 Years Guarantee</option>
-          <option value="2y">2 Years Guarantee</option>
-          <option value="3y">3 Years Guarantee</option>
-        </select>
-        <input type="submit" value="Add To Cart">
-    </form>
-    <ul>
-        {% for key, value in product.features.items %}
-            <li><strong>{{ key }}:</strong> {{ value }}</li>
-        {% endfor %}
-    </ul>
-    Tags:
-    {% for tag in product.tags.all %}
-        <span><a>{{ tag }}</a></span>
-    {% endfor %}
-    <h2>Comments</h2>
-    {% for comment in comments %}
-        <a>Author: {{ comment.author }} | Date: {{ comment.datetime_created }}</a>
-        <span><a href="{% url 'blog:reply_to_comment' comment.id %}">Reply</a></span>
-        <p>{{ comment.body }}</p>
-        {% for reply in comment.replies.all %}
-            <p style="margin-left: 20px;">{{ reply.author }} | {{ reply.datetime_created }}</p>
-            <p style="margin-left: 20px;">{{ reply.body }}</p>
-        {% endfor %}
-    {% endfor %}
-    <h3>Leave Your Comment</h3>
-    <form method="POST" action="{% url 'products:comment_create' product.id %}">
-        {% csrf_token %}
-        {{ comment_form.as_p }}
-        <input type="submit" value="Submit Comment">
-    </form>
-    <h2>Reviews</h2>
-    {% for review in product.reviews.all %}
-        <a>Author: {{ review.author }} | Date: {{ review.datetime_created }}</a>
-        <p>{{ review.body }}</p>
-        <p>{{ review.recommend }} | {{ review.stars }}</p>
-    {% endfor %}
-    <h3>Leave Your Review</h3>
-    <form method="POST" action="{% url 'products:review_create' product.id %}">
-        {% csrf_token %}
-        {{ review_form.as_p }}
-        <input type="submit" value="Submit Comment">
-    </form>
+    <!-- PRODUCT-AREA START -->
+    <div class="product-area single-pro-area pt-80 pb-80 product-style-2">
+        <div class="container">
+            <div class="row shop-list single-pro-info no-sidebar">
+                <!-- Single-product start -->
+                <div class="col-lg-12">
+                    <div class="single-product clearfix">
+                        <!-- Single-pro-slider Big-photo start -->
+                        <div class="single-pro-slider single-big-photo view-lightbox slider-for">
+                            {% for image in product.images.all %}
+                                <div>
+                                    <img src="{{ image.image.url }}" alt=""/>
+                                    <a class="view-full-screen" href="{{ image.image.url }}" data-lightbox="roadtrip"
+                                       data-title="My caption">
+                                        <i class="zmdi zmdi-zoom-in"></i>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <!-- Single-pro-slider Big-photo end -->
+                        <div class="product-info">
+                            <div class="fix">
+										<span class="pro-rating floatleft">
+											<a href="#"><i class="zmdi zmdi-star"></i></a>
+											<a href="#"><i class="zmdi zmdi-star"></i></a>
+											<a href="#"><i class="zmdi zmdi-star"></i></a>
+											<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+											<a href="#"><i class="zmdi zmdi-star-half"></i></a>
+											<span>( 27 Rating )</span>
+										</span>
+                                <br>
+                                <h4 dir="rtl" class="post-title floatright">{{ product.title }}</h4>
+                            </div>
+                            <div class="fix mb-20">
+                                <span dir="rtl" class="pro-price">{{ product.price }} تومان </span>
+                            </div>
+                            <div class="color-filter single-pro-color mb-20 clearfix">
+                                <div dir="rtl" class="mb-20">
+                                    <a><strong> تولید کننده: {{ product.company }} | مدل: {{ product.model }} | دسته
+                                        بندی: {{ product.category }} </strong>
+                                    </a>
+                                </div>
+                                <div dir="rtl" class="product-description">
+                                    <p>{{ product.description|truncatewords:40 }}</p>
+                                </div>
+                                <!-- color start -->
+                            </div>
+                            <!-- color end -->
+                            <!-- Size start -->
+                            <!-- Size end -->
+                            <div class="clearfix">
+                                <form id="cart_add" action="{% url 'cart:cart_add' product.id %}" method="POST">
+                                {% csrf_token %}
+                            <div>
+                                <h6>انتخاب گارانتی:</h6>
+                                <select name="guarantee" class="form-select form-select-sm mb-35" aria-label=".form-select-sm example"
+                                        style="width: 220px;">
+                                    <option value="ng" selected>بدون گارانتی</option>
+                                    <option value="1y">گارانتی یکساله</option>
+                                    <option value="2y">گارانتی دو ساله</option>
+                                    <option value="3y">گارانتی سه ساله</option>
+                                </select>
+                            </div>
+                                <div class="cart-plus-minus">
+                                    <input type="text" value="1" name="quantity" max="30" class="cart-plus-minus-box">
+                                </div>
+
+                                <div class="product-action clearfix">
+                                    <a href="javascript:{}" data-bs-toggle="tooltip" data-placement="top"
+                                       onclick="document.getElementById('cart_add').submit(); return false;"
+                                       title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                    <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"
+                                       title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                    <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i
+                                            class="zmdi zmdi-refresh"></i></a>
+                                </div>
+                                </form>
+                            </div>
+                            <!-- Single-pro-slider Small-photo start -->
+                            <div class="single-pro-slider single-sml-photo slider-nav">
+                                {% for image in product.images.all %}
+                                    <div>
+                                        <img src="{{ image.image.url }}" alt="" width="70" height="83"/>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <!-- Single-pro-slider Small-photo end -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Single-product end -->
+            </div>
+            <!-- single-product-tab start -->
+            <div class="single-pro-tab">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="single-pro-tab-menu" dir="rtl">
+                            <!-- Nav tabs -->
+                            <ul class="nav d-block">
+                                <li><a class="active" href="#description" data-bs-toggle="tab">توضیحات محصول</a></li>
+                                <li><a href="#reviews" data-bs-toggle="tab">بررسی مشتریان</a></li>
+                                <li><a href="#comments" data-bs-toggle="tab">نظرات</a></li>
+                                <li><a href="#tags" data-bs-toggle="tab">ویژگی های محصول</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="description">
+                                <div class="pro-tab-info pro-description">
+                                    <h3 dir="rtl" class="tab-title title-border mb-30">{{ product.title }}</h3>
+                                    <p dir="rtl">{{ product.description }}</p>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="reviews">
+                                <div class="pro-tab-info pro-reviews">
+                                    <div class="customer-review mb-60">
+                                        {% if reviews %}
+                                            <u><h3 dir="rtl" class="tab-title title-border mb-30"> {{ reviews.count }} بررسی برای {{ product.title }} </h3> </u>
+                                            <ul class="product-comments clearfix">
+                                                <li class="mb-30">
+                                                    {% for review in product.reviews.all %}
+                                                        <div class="pro-reviewer">
+                                                            <img src="{{ review.author.profile_picture.url }}" alt=""/>
+                                                        </div>
+                                                        <div class="pro-reviewer-comment">
+                                                            <div class="fix">
+                                                                <div class="floatleft mbl-center">
+                                                                    <h5 class="text-uppercase mb-0">
+                                                                        <strong>{{ review.author }}</strong></h5>
+                                                                    {% if review.recommend %}
+                                                                        <a>پیشنهاد میکنم</a>
+                                                                        <span>
+                                                                        <a>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-hand-thumbs-up"
+                                                                                 viewBox="0 0 16 16">
+                                                                                <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z"/>
+                                                                            </svg>
+                                                                        </a>
+                                                                        </span>
+                                                                        <span>
+                                                                        {{ review.get_stars_display }}
+                                                                        </span>
+                                                                    {% else %}
+                                                                        <a>پیشنهاد نمیکنم</a>
+                                                                        <span>
+                                                                        <a>
+                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                 width="16" height="16"
+                                                                                 fill="currentColor"
+                                                                                 class="bi bi-hand-thumbs-down"
+                                                                                 viewBox="0 0 16 16">
+                                                                              <path d="M8.864 15.674c-.956.24-1.843-.484-1.908-1.42-.072-1.05-.23-2.015-.428-2.59-.125-.36-.479-1.012-1.04-1.638-.557-.624-1.282-1.179-2.131-1.41C2.685 8.432 2 7.85 2 7V3c0-.845.682-1.464 1.448-1.546 1.07-.113 1.564-.415 2.068-.723l.048-.029c.272-.166.578-.349.97-.484C6.931.08 7.395 0 8 0h3.5c.937 0 1.599.478 1.934 1.064.164.287.254.607.254.913 0 .152-.023.312-.077.464.201.262.38.577.488.9.11.33.172.762.004 1.15.069.13.12.268.159.403.077.27.113.567.113.856 0 .289-.036.586-.113.856-.035.12-.08.244-.138.363.394.571.418 1.2.234 1.733-.206.592-.682 1.1-1.2 1.272-.847.283-1.803.276-2.516.211a9.877 9.877 0 0 1-.443-.05 9.364 9.364 0 0 1-.062 4.51c-.138.508-.55.848-1.012.964zM11.5 1H8c-.51 0-.863.068-1.14.163-.281.097-.506.229-.776.393l-.04.025c-.555.338-1.198.73-2.49.868-.333.035-.554.29-.554.55V7c0 .255.226.543.62.65 1.095.3 1.977.997 2.614 1.709.635.71 1.064 1.475 1.238 1.977.243.7.407 1.768.482 2.85.025.362.36.595.667.518l.262-.065c.16-.04.258-.144.288-.255a8.34 8.34 0 0 0-.145-4.726.5.5 0 0 1 .595-.643h.003l.014.004.058.013a8.912 8.912 0 0 0 1.036.157c.663.06 1.457.054 2.11-.163.175-.059.45-.301.57-.651.107-.308.087-.67-.266-1.021L12.793 7l.353-.354c.043-.042.105-.14.154-.315.048-.167.075-.37.075-.581 0-.211-.027-.414-.075-.581-.05-.174-.111-.273-.154-.315l-.353-.354.353-.354c.047-.047.109-.176.005-.488a2.224 2.224 0 0 0-.505-.804l-.353-.354.353-.354c.006-.005.041-.05.041-.17a.866.866 0 0 0-.121-.415C12.4 1.272 12.063 1 11.5 1"/>
+                                                                            </svg>
+                                                                        </a>
+                                                                        </span>
+                                                                        <span>
+                                                                        {{ review.get_stars_display }}
+                                                                        </span>
+                                                                    {% endif %}
+                                                                    <p class="reply-date">{{ review.datetime_created }}</p>
+                                                                </div>
+                                                                <div class="comment-reply floatright">
+                                                                </div>
+                                                            </div>
+                                                            <p class="mb-20">{{ review.body }}</p>
+                                                        </div>
+                                                    {% endfor %}
+                                                </li>
+                                            </ul>
+                                        {% else %}
+                                            <div class="text-center">
+                                                <h6 class="text-uppercase mb-10"><strong>.بررسی برای این پست یافت
+                                                    نشد</strong></h6>
+                                            </div>
+                                        {% endif %}
+                                        {% if user.is_authenticated %}
+                                            <div class="leave-review">
+                                                <h3 dir="rtl" class="tab-title title-border mb-30">بررسی خود را
+                                                    بنویسید</h3>
+                                                <div class="reply-box">
+                                                    <form action="{% url 'products:review_create' product.id %}"
+                                                          method="POST">
+                                                        {% csrf_token %}
+                                                        <div class="row">
+                                                            <div>
+                                                                <textarea class="custom-textarea" name="body"
+                                                                          placeholder="Your review here..."></textarea>
+                                                                <a dir="rtl"> امتیاز شما به محصول:</a>
+                                                                <select name="stars" class="form-select mt-1"
+                                                                        aria-label="Default select example mt-5"
+                                                                        style="width: 220px;">
+                                                                    <option value="1">Bad</option>
+                                                                    <option value="2">Very Bad</option>
+                                                                    <option value="3">Normal</option>
+                                                                    <option value="4">Good</option>
+                                                                    <option value="5" selected>Perfect</option>
+                                                                </select>
+                                                                <div class="form-check mt-10">
+                                                                    <input class="form-check-input" name="recommend"
+                                                                           type="checkbox" value="checked"
+                                                                           id="flexCheckChecked" checked>
+                                                                    <label class="form-check-label"
+                                                                           for="flexCheckChecked">
+                                                                        این محصول را پیشنهاد میکنم
+                                                                    </label>
+                                                                </div>
+                                                                <button type="submit" data-text="ارسال"
+                                                                        class="button-one submit-button mt-20">ارسال
+                                                                    بررسی
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="text-center mb-10" dir="rtl">
+                                                <h6 class="text-uppercase mb-0"><strong>برای ثبت بررسی ابتدا باید وارد
+                                                    شوید!</strong></h6>
+                                                <div class="mt-20">
+                                                    <button href="" type="submit" data-text="ورود/ثبت نام"
+                                                            class="submit-button submit-btn-2 button-one">ورود/ثبت نام
+                                                    </button>
+                                                    <br>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="comments">
+                                <div class="pro-tab-info pro-reviews">
+                                    {% if comments %}
+                                        <u><h3 dir="rtl" class="tab-title title-border mb-30">{{ product.product_comments.all.count }}
+                                            نظر برای {{ product.title }}</h3></u>
+                                        <ul class="product-comments clearfix">
+                                            {% for comment in comments %}
+                                                <li class="mb-30 mt-10 mb-20">
+                                                    <div class="author-photo floatleft mr-15">
+                                                        <img src="{{ comment.author.profile_picture.url }}" alt=""/>
+                                                    </div>
+                                                    <div class="pro-reviewer-comment ">
+                                                        <div class="fix">
+                                                            <div class="floatleft mbl-center">
+                                                                <h5 class="text-uppercase mb-0">
+                                                                    <strong>{{ comment.author }}</strong>
+                                                                </h5>
+                                                                <p class="reply-date">{{ comment.datetime_created }}</p>
+                                                            </div>
+                                                            {% if user.is_authenticated %}
+                                                                <div class="comment-reply floatright">
+                                                                    <a href="#"><i class="zmdi zmdi-mail-reply"></i></a>
+                                                                </div>
+                                                            {% endif %}
+                                                        </div>
+                                                        <p class="mb-0">{{ comment.body }}</p>
+                                                    </div>
+                                                    <div class="reply-box" style="display: none;">
+                                                        <form action="{% url 'products:reply_to_comment' comment.id %}"
+                                                              method="POST">
+                                                            {% csrf_token %}
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                            <textarea dir="rtl" class="custom-textarea" name="body"
+                                                                      placeholder="متن ریپلای ..."></textarea>
+                                                                    <button type="submit" data-text="ارسال"
+                                                                            class="button-one submit-button mt-20 floatright">
+                                                                        ثبت نظر
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+                                                        </form>
+                                                    </div>
+                                                </li>
+                                                {% for reply in comment.replies.all %}
+                                                    <li class="threaded-comments mb-20">
+                                                    <div class="author-photo floatleft ml-20">
+                                                        <img src="{{ reply.author.profile_picture.url }}" alt=""/>
+                                                    </div>
+                                                    <div class="pro-reviewer-comment mb-10">
+                                                        <div class="fix">
+                                                            <div class="floatleft mbl-center ml-10">
+                                                                <h5 class="text-uppercase mb-0">
+                                                                    <strong>{{ reply.author }}</strong>
+                                                                </h5>
+                                                                Replied To: {{ comment.author }}
+                                                                <p class="reply-date">{{ reply.datetime_created }}</p>
+                                                            </div>
+                                                        </div>
+                                                        <p class="mb-0 ml-10">{{ reply.body }}</p>
+                                                    </div>
+                                                {% endfor %}
+                                            {% endfor %}
+                                            <div class="reply-box" style="display: none;">
+                                                <form action="#">
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <input type="text" placeholder="Your name here..."
+                                                                   name="reply-name"/>
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <input type="text" placeholder="Your email here..."
+                                                                   name="reply-email"/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <textarea class="custom-textarea" name="reply-message"
+                                                                      placeholder="Your reply here..."></textarea>
+                                                            <button type="submit" data-text="submit reply"
+                                                                    class="button-one submit-button mt-20">
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                            </li>
+                                        </ul>
+                                    {% else %}
+                                        <div class="text-center">
+                                            <h6 class="text-uppercase mb-0"><strong>.نظری برای این پست یافت نشد</strong>
+                                            </h6>
+                                        </div>
+                                    {% endif %}
+                                    {% if user.is_authenticated %}
+                                        <div class="leave-review">
+                                            <h3 dir="rtl" class="tab-title title-border mb-30">نظر خود را بنویسید</h3>
+                                            <div class="reply-box">
+                                                <form action="{% url 'products:comment_create' product.id %}"
+                                                      method="POST">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                    <textarea dir="rtl" class="custom-textarea mt-10" name="body"
+                                                              placeholder="متن نظر ..."></textarea>
+                                                            <button type="submit" data-text="ارسال"
+                                                                    class="button-one submit-button mt-20 floatright">
+                                                                ثبت
+                                                                نظر
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="text-center" dir="rtl">
+                                            <h6 class="text-uppercase mb-0"><strong>برای ثبت نظر ابتدا باید وارد
+                                                شوید!</strong></h6>
+                                            <div class="mt-20">
+                                                <button href="" type="submit" data-text="ورود/ثبت نام"
+                                                        class="submit-button submit-btn-2 button-one">ورود/ثبت نام
+                                                </button>
+                                                <br>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="tags">
+                                <div class="pro-tab-info pro-information">
+                                    <h3 dir="rtl" class="tab-title title-border mb-30">مشخصات</h3>
+                                    <table dir="rtl" class="table">
+                                    <h5 dir="rtl" class="tab-title title-border mb-30">مشخصات کلی </h5>
+                                        <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for key, value in product.features.items %}
+                                            <tr>
+                                                <td>{{ key }}</td>
+                                                <td>{{ value }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- single-product-tab end -->
+    </div>
+    </div>
+    <!-- PRODUCT-AREA END -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const newCommentForm = document.querySelector(".leave-review .reply-box");
+            const replyButtons = document.querySelectorAll(".comment-reply a:nth-child(1)");
+            const replyForms = document.querySelectorAll(".reply-box");
+
+            replyButtons.forEach((button, index) => {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
+                    const currentForm = replyForms[index];
+                    const isDisplayed = getComputedStyle(currentForm).display;
+
+                    if (isDisplayed === "block") {
+                        currentForm.style.display = "none";
+                    } else {
+                        replyForms.forEach(form => form.style.display = "none");
+                        currentForm.style.display = "block";
+                    }
+                    newCommentForm.style.display = "block";
+                });
+            });
+        });
+    </script>
 {% endblock %}
+
+{#    <h3>{{ product.title }}</h3>#}
+{#    <a>{{ product.company }} | {{ product.model }} | {{ product.category }} |#}
+{#        Comments: {{ product.product_comments.all.count }} | Reviews: {{ product.reviews.all.count }}</a>#}
+{#    <br>#}
+{#    <p>{{ product.description }}</p>#}
+{#    <br>#}
+{#    <a>Price: {{ product.price }} Toman</a>#}
+{#    <br>#}
+{#    {% for color in product.colors.all %}#}
+{#        <a>Color: {{ color.name }}</a>#}
+{#    {% endfor %}#}
+{#    <br>#}
+{#    <a>Inventory: {{ product.inventory }}</a>#}
+{#    <form action="{% url 'cart:cart_add' product.id %}" method="POST">#}
+{#    {% csrf_token %}#}
+{#        <input type="number" name="quantity" min="1" max="30">#}
+{#        <select name="name" id="id_name">#}
+{#          <option value="ng" selected="">No Guarantee</option>#}
+{#          <option value="1y">1 Years Guarantee</option>#}
+{#          <option value="2y">2 Years Guarantee</option>#}
+{#          <option value="3y">3 Years Guarantee</option>#}
+{#        </select>#}
+{#        <input type="submit" value="Add To Cart">#}
+{#    </form>#}
+{#    <ul>#}
+{#        {% for key, value in product.features.items %}#}
+{#            <li><strong>{{ key }}:</strong> {{ value }}</li>#}
+{#        {% endfor %}#}
+{#    </ul>#}
+{#    Tags:#}
+{#    {% for tag in product.tags.all %}#}
+{#        <span><a>{{ tag }}</a></span>#}
+{#    {% endfor %}#}
+{#    <h2>Comments</h2>#}
+{#    {% for comment in comments %}#}
+{#        <a>Author: {{ comment.author }} | Date: {{ comment.datetime_created }}</a>#}
+{#        <span><a href="{% url 'blog:reply_to_comment' comment.id %}">Reply</a></span>#}
+{#        <p>{{ comment.body }}</p>#}
+{#        {% for reply in comment.replies.all %}#}
+{#            <p style="margin-left: 20px;">{{ reply.author }} | {{ reply.datetime_created }}</p>#}
+{#            <p style="margin-left: 20px;">{{ reply.body }}</p>#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
+{#    <h3>Leave Your Comment</h3>#}
+{#    <form method="POST" action="{% url 'products:comment_create' product.id %}">#}
+{#        {% csrf_token %}#}
+{#        {{ comment_form.as_p }}#}
+{#        <input type="submit" value="Submit Comment">#}
+{#    </form>#}
+{#    <h2>Reviews</h2>#}
+{#    {% for review in product.reviews.all %}#}
+{#        <a>Author: {{ review.author }} | Date: {{ review.datetime_created }}</a>#}
+{#        <p>{{ review.body }}</p>#}
+{#        <p>{{ review.recommend }} | {{ review.stars }}</p>#}
+{#    {% endfor %}#}
+{#    <h3>Leave Your Review</h3>#}
+{#    <form method="POST" action="{% url 'products:review_create' product.id %}">#}
+{#        {% csrf_token %}#}
+{#        {{ review_form.as_p }}#}
+{#        <input type="submit" value="Submit Comment">#}
+{#    </form>#}

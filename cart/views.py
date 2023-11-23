@@ -10,12 +10,11 @@ def cart_detail_view(request):
     for item in cart:
         item['product_update_quantity_form'] = AddProductToCartForm(initial={
             'quantity': item['quantity'],
-            'name': item['product_guarantee'],
+            'guarantee': item['guarantee_name'],
             'inplace': True,
         })
 
     return render(request, 'cart/cart_detail.html', context={
-        'add_to_cart_form': AddProductToCartForm(),
         'cart': cart,
     })
 
@@ -28,7 +27,8 @@ def add_to_cart_view(request, product_id):
     if form.is_valid():
         cleaned_data = form.cleaned_data
         quantity = cleaned_data['quantity']
-        cart.add(product, quantity, replace_quantity=cleaned_data['inplace'], guarantee_name=cleaned_data['name'])
+        print(quantity, product, cleaned_data['guarantee'], cleaned_data['inplace'])
+        cart.add(product, quantity, replace_quantity=cleaned_data['inplace'], guarantee_name=cleaned_data['guarantee'])
 
     return redirect('cart:cart_detail')
 

@@ -23,19 +23,19 @@ class Cart:
         if product_id not in self.cart:
             self.cart[product_id] = {'quantity': 0}
 
-        if guarantee_name == 'ng':
-            self.cart[product_id]['product_guarantee'] = 'na'
-            self.cart[product_id]['guarantee_price'] = 0
-            self.cart[product_id]['guarantee_description'] = ''
-        else:
-            guarantee = Guarantee.objects.filter(name=guarantee_name).first()
-            if guarantee:
-                self.cart[product_id]['product_guarantee'] = guarantee_name
-                self.cart[product_id]['guarantee_price'] = guarantee.price
-                self.cart[product_id]['guarantee_description'] = guarantee.description
+            guarantee = Guarantee.objects.get(name=guarantee_name)
+            self.cart[product_id]['guarantee_name'] = guarantee.name
+            self.cart[product_id]['guarantee_price'] = guarantee.price
+            self.cart[product_id]['guarantee_desc'] = guarantee.description
 
         if replace_quantity:
             self.cart[product_id]['quantity'] = quantity
+
+            guarantee = Guarantee.objects.get(name=guarantee_name)
+            self.cart[product_id]['guarantee_name'] = guarantee.name
+            self.cart[product_id]['guarantee_price'] = guarantee.price
+            self.cart[product_id]['guarantee_desc'] = guarantee.description
+
         else:
             self.cart[product_id]['quantity'] += quantity
 
@@ -71,8 +71,7 @@ class Cart:
             cart[str(product.id)]['product_obj'] = product
 
         for item in cart.values():
-            item['total_price'] = (item['product_obj'].price * item['quantity']) + \
-                                  (item['guarantee_price'] * item['quantity'])
+            item['total_price'] = (item['product_obj'].price * item['quantity']) + (item['quantity'] * item['guarantee_price'])
             yield item
 
     def clear(self):
@@ -80,6 +79,7 @@ class Cart:
         clear the cart from every product
         """
         del self.session['cart']
+        messages.success(self.request, "All Cart Items Removed Successfully.")
         self.save()
 
     def __len__(self):
@@ -92,10 +92,20 @@ class Cart:
         """
         iterate on products in cart and return sum of items prices
         """
-        return sum((item['quantity'] * item['product_obj'].price) +
-                   (item['quantity'] * item['guarantee_price']) for item in self.cart.values())
+        return sum((item['quantity'] * item['product_obj'].price) + (item['quantity'] * item['guarantee_price']) for item in self.cart.values())
+
+    def get_guaranties_total_price(self):
+        return sum(item['quantity'] * item['guarantee_price'] for item in self.cart.values())
+
+    def get_total_price_no_guarantee(self):
+        return sum((item['quantity'] * item['product_obj'].price) for item in self.cart.values())
 
     def is_empty(self):
         if self.cart:
             return False
         return True
+
+    def is_not_empty(self):
+        if self.cart:
+            return True
+        return False

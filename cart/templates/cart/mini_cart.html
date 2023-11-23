@@ -1,0 +1,30 @@
+<div class="mini-cart-brief text-right">
+    <div class="cart-items">
+        <p dir="rtl" class="mb-0"> شما <span> {{ cart|length }} محصول </span> در سبد خرید خود دارید.</p>
+    </div>
+    <div dir="rtl" class="all-cart-product clearfix">
+        {% for item in cart %}
+            <div class="single-cart clearfix">
+                <div class="cart-photo">
+                    <a href="#"><img src="{{ item.product_obj.cover.url }}" alt=""/></a>
+                </div>
+                <div class="cart-info">
+                    <h5><a href="#">{{ item.product_obj.title }}</a></h5>
+                    <p class="mb-0"> قیمت: {{ item.product_obj.price }} + گارانتی {{ item.guarantee_name }} </p>
+                    <p class="mb-0">تعداد: {{ item.quantity }}</p>
+                    <span class="cart-delete"><a href="#"><i
+                            class="zmdi zmdi-close"></i></a></span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="cart-totals">
+        <h5 class="mb-0">Total <span class="floatleft">$500.00</span></h5>
+    </div>
+    <div class="cart-bottom  clearfix">
+        <a href="cart.html" class="button-one floatright text-uppercase"
+           data-text="View cart">سبد خرید</a>
+        <a href="checkout.html" class="button-one floatleft text-uppercase"
+           data-text="Check out">ثبت سفارش</a>
+    </div>
+</div>

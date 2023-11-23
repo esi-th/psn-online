@@ -63,61 +63,84 @@
                         <div class="mini-cart text-end">
                             <ul>
                                 <li>
-                                <li>
-                                    <a class="cart-icon" href="#">
-                                        <i class="zmdi zmdi-shopping-cart"></i>
-                                        <span>3</span>
+                                    <a class="cart-icon" href="{% url 'home' %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                             fill="currentColor" class="bi bi-house-fill" viewBox="0 0 30 30">
+                                            <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                                            <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6Z"/>
+                                        </svg>
                                     </a>
-                                    <div class="mini-cart-brief text-left">
-                                        <div class="cart-items">
-                                            <p class="mb-0">You have <span>03 items</span> in your shopping bag</p>
-                                        </div>
-                                        <div class="all-cart-product clearfix">
-                                            <div class="single-cart clearfix">
-                                                <div class="cart-photo">
-                                                    <a href="#"><img src="img/cart/1.jpg" alt=""/></a>
-                                                </div>
-                                                <div class="cart-info">
-                                                    <h5><a href="#">dummy product name</a></h5>
-                                                    <p class="mb-0">Price : $ 100.00</p>
-                                                    <p class="mb-0">Qty : 02 </p>
-                                                    <span class="cart-delete"><a href="#"><i
-                                                            class="zmdi zmdi-close"></i></a></span>
+                                </li>
+                                <li>
+                                    <a class="cart-icon" href="{% url 'products:products_list' %}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                             fill="currentColor" class="bi bi-shop" viewBox="0 0 30 30">
+                                            <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0M1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5M4 15h3v-5H4zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1zm3 0h-2v3h2z"/>
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="cart-icon" href="{% url 'cart:cart_detail' %}">
+                                        <i class="zmdi zmdi-shopping-cart"></i>
+                                        <span>{{ cart|length }}</span>
+                                    </a>
+                                    {% if cart.is_empty %}
+                                        <div class="mini-cart-brief text-right"
+                                             style="height: 450px; overflow-y: scroll;">
+                                            <div class="cart-items">
+                                                <p dir="rtl" class="text-uppercase mb-0 text-center">سبد خرید شما خالی
+                                                    است!</p>
+                                            </div>
+                                            <div dir="rtl" class="all-cart-product clearfix">
+                                                <p dir="rtl" class="text-uppercase mb-0 text-center">
+                                                    <span> برای شروع یک محصول به سبد خرید خود اضافه کنید. </span>
+                                                </p>
+                                                <div class="text-uppercase mb-0 text-center">
+                                                    <u><a href="{% url 'products:products_list' %}">برو به
+                                                        محصولات</a></u>
                                                 </div>
                                             </div>
-                                            <div class="single-cart clearfix">
-                                                <div class="cart-photo">
-                                                    <a href="#"><img src="img/cart/2.jpg" alt=""/></a>
-                                                </div>
-                                                <div class="cart-info">
-                                                    <h5><a href="#">dummy product name</a></h5>
-                                                    <p class="mb-0">Price : $ 300.00</p>
-                                                    <p class="mb-0">Qty : 01 </p>
-                                                    <span class="cart-delete"><a href="#"><i
-                                                            class="zmdi zmdi-close"></i></a></span>
-                                                </div>
+                                        </div>
+                                    {% else %}
+                                        <div class="mini-cart-brief text-right"
+                                             style="height: 450px; overflow-y: scroll;">
+                                            <div class="cart-items">
+                                                <p dir="rtl" class="text-uppercase mb-0 text-center"> شما
+                                                    <span> {{ cart|length }} محصول </span> در سبد خرید خود دارید.</p>
+                                            </div>
+                                            <div dir="rtl" class="all-cart-product clearfix">
+                                                {% for item in cart %}
+                                                    <div class="single-cart clearfix">
+                                                        <div class="cart-photo">
+                                                            <a href="#"><img src="{{ item.product_obj.cover.url }}"
+                                                                             alt=""/></a>
+                                                        </div>
+                                                        <div class="cart-info">
+                                                            <h5><a href="#">{{ item.product_obj.title|truncatewords:3 }}</a></h5>
+                                                            <p class="mb-0"> قیمت: {{ item.product_obj.price }} +
+                                                                گارانتی {{ item.guarantee_name }} </p>
+                                                            <p class="mb-0">تعداد: {{ item.quantity }}</p>
+                                                            <span class="cart-delete"><a href="#"><i
+                                                                    class="zmdi zmdi-close"></i></a></span>
+                                                        </div>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            <div class="cart-totals">
+                                                <h5 dir="rtl" class="mb-0">جمع کل سبد خرید :<span
+                                                        class="floatleft">{{ cart.get_total_price }}</span></h5>
+                                            </div>
+                                            <div class="cart-bottom  clearfix">
+                                                <a href="{% url 'cart:cart_detail' %}"
+                                                   class="button-one floatright text-uppercase"
+                                                   data-text="سبد خرید">سبد خرید</a>
+                                                <a href="checkout.html" class="button-one floatleft text-uppercase"
+                                                   data-text="ثبت سفارش">ثبت سفارش</a>
                                             </div>
                                         </div>
-                                        <div class="cart-totals">
-                                            <h5 class="mb-0">Total <span class="floatleft">$500.00</span></h5>
-                                        </div>
-                                        <div class="cart-bottom  clearfix">
-                                            <a href="cart.html" class="button-one floatright text-uppercase"
-                                               data-text="View cart">View cart</a>
-                                            <a href="checkout.html" class="button-one floatleft text-uppercase"
-                                               data-text="Check out">Check out</a>
-                                        </div>
-                                    </div>
+                                    {% endif %}
                                 </li>
 
-                                <a class="cart-icon" href="#">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                         class="bi bi-person-circle" viewBox="0 -1 30 30">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                                        <path fill-rule="evenodd"
-                                              d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-                                    </svg>
-                                </a>
                                 <li>
                                     <a class="cart-icon" href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
@@ -126,6 +149,32 @@
                                         </svg>
                                     </a>
                                 </li>
+                                <li>
+                                    {% if user.is_authenticated %}
+                                        <h6 class="text-uppercase mb-0 text-center mb-10 mr-10" dir="rtl"><strong>خوش
+                                            آمدید | {{ user.username }}
+                                        </strong></h6>
+                                        <li>
+                                            <a class="cart-icon" href="#">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                                     fill="currentColor" class="bi bi-person-fill-gear"
+                                                     viewBox="0 -4 30 30">
+                                                    <path d="M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h5.256A4.493 4.493 0 0 1 8 12.5a4.49 4.49 0 0 1 1.544-3.393C9.077 9.038 8.564 9 8 9c-5 0-6 3-6 4m9.886-3.54c.18-.613 1.048-.613 1.229 0l.043.148a.64.64 0 0 0 .921.382l.136-.074c.561-.306 1.175.308.87.869l-.075.136a.64.64 0 0 0 .382.92l.149.045c.612.18.612 1.048 0 1.229l-.15.043a.64.64 0 0 0-.38.921l.074.136c.305.561-.309 1.175-.87.87l-.136-.075a.64.64 0 0 0-.92.382l-.045.149c-.18.612-1.048.612-1.229 0l-.043-.15a.64.64 0 0 0-.921-.38l-.136.074c-.561.305-1.175-.309-.87-.87l.075-.136a.64.64 0 0 0-.382-.92l-.148-.045c-.613-.18-.613-1.048 0-1.229l.148-.043a.64.64 0 0 0 .382-.921l-.074-.136c-.306-.561.308-1.175.869-.87l.136.075a.64.64 0 0 0 .92-.382l.045-.148ZM14 12.5a1.5 1.5 0 1 0-3 0 1.5 1.5 0 0 0 3 0"/>
+                                                </svg>
+                                            </a>
+                                        </li>
+                                    {% else %}
+                                        <a class="cart-icon" href="#">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40"
+                                                 fill="currentColor"
+                                                 class="bi bi-person-circle" viewBox="0 -1 30 30">
+                                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+                                                <path fill-rule="evenodd"
+                                                      d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+                                            </svg>
+                                        </a>
+                                        </li>
+                                    {% endif %}
                             </ul>
                         </div>
                     </div>
@@ -141,8 +190,8 @@
         <div class="main-menu  d-none d-md-block">
             <nav>
                 <ul>
-                    <li><a href="index.html">خانه</a></li>
-                    <li><a href="shop.html">محصولات</a></li>
+                    <li><a href="{% url 'home' %}">خانه</a></li>
+                    <li><a href="{% url 'products:products_list' %}">محصولات</a></li>
                     <li><a href="{% url 'blog:posts_list' %}">بلاگ</a></li>
                     <li><a href="about.html">درباره ما</a></li>
                     <li><a href="contact.html">تماس با ما</a></li>
@@ -173,6 +222,15 @@
         </div>
     </div>
     <!-- Mobile-menu end -->
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="thank-recieve bg-white mb-30">
+            <p>{{ message }}</p>
+        </div>
+    {% endfor %}
+{% endif %}
+
     {% block content %}
 
     {% endblock content %}

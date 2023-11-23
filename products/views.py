@@ -5,6 +5,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.views.decorators.http import require_POST
 from django.contrib import messages
 from django.views import generic
+from django.http import HttpResponseRedirect
 
 
 from .models import Category, Comment, Product, Review
@@ -17,9 +18,9 @@ def products_list_view(request):
     if category is not None:
         products = Product.objects.filter(category__name=category).order_by('datetime_modified')
     else:
-        products = Product.objects.all().order_by('datetime_created')
+        products = Product.objects.all().order_by('-datetime_created')
 
-    paginator = Paginator(products, 1)
+    paginator = Paginator(products, 7)
     page_num = request.GET.get('page')
 
     try:
@@ -47,6 +48,7 @@ class ProductDetailView(generic.DetailView):
         contex['comment_form'] = NewCommentForm()
         product = get_object_or_404(Product, id=self.kwargs['pk'])
         contex['comments'] = Comment.objects.filter(product=product, reply_to__isnull=True)
+        contex['reviews'] = Review.objects.filter(product=product)
         contex['review_form'] = NewReviewForm()
         return contex
 
@@ -69,17 +71,19 @@ class CommentCreateView(LoginRequiredMixin, generic.CreateView):
 @login_required
 def reply_to_comment(request, comment_id):
     parent_comment = get_object_or_404(Comment, id=comment_id)
-    post = parent_comment.product
+    product = parent_comment.product
 
     if request.method == 'POST':
         form = NewCommentForm(request.POST)
         if form.is_valid():
             new_comment = form.save(commit=False)
-            new_comment.post = post
+            new_comment.product = product
             new_comment.reply_to = parent_comment
+            new_comment.author = request.user
             new_comment.save()
+            return HttpResponseRedirect(reverse('products:product_detail', args=[product.id]))
 
-    return reverse('post_detail', args=[comment_id])
+        return HttpResponseRedirect(reverse('products:product_detail', args=[product.id]))
 
 
 class ReviewCreateView(LoginRequiredMixin, generic.CreateView):
@@ -101,11 +105,11 @@ class ReviewCreateView(LoginRequiredMixin, generic.CreateView):
 def product_search_view(request):
     if request.method == 'POST':
         product_keyword = request.POST['searched']
-        products = Product.objects.filter(title__contains=product_keyword).order_by('-datetime_modified')
+        products = Product.objects.filter(title__icontains=product_keyword).order_by('-datetime_modified')
 
         if not products:
             messages.warning(request, 'No Products Found!')
-            return redirect('products_list')
+            return redirect('products:products_list')
 
         return render(request, 'products/products_list.html', context={
             'products': products,

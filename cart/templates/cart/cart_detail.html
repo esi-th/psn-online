@@ -5,22 +5,162 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Cart Detail</h1>
-    <div>
-        {% for item in cart %}
-            <p>{{ item.product_obj.title }}: {{ item.quantity }} x {{ item.product_obj.price }} + {{ item.product_guarantee }} {{ item.guarantee_description }} = {{ item.total_price }}
-                <a href="">Remove</a></p>
-            <form action="{% url 'cart:cart_add' item.product_obj.id %}" method="POST">
-                {% csrf_token %}
-                <input type="number" name="quantity" value="{{ item.quantity }}">
-                {{ item.product_update_quantity_form.name }}
-                {{ item.product_update_quantity_form.inplace }}
-                <input type="submit" value="Up">
-            </form>
-            <br>
-        {% endfor %}
+
+        <!-- SHOPPING-CART-AREA START -->
+    <div class="shopping-cart-area  pt-80 pb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shopping-cart">
+
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <!-- shopping-cart start -->
+                            <div class="tab-pane active" id="shopping-cart">
+                            {% if cart.is_not_empty %}
+                                    <div class="shop-cart-table">
+                                        <div class="table-content table-responsive">
+                                            <table dir="rtl">
+                                                <thead>
+                                                <tr>
+                                                    <th class="product-thumbnail">محصول</th>
+                                                    <th class="product-price">قیمت</th>
+                                                    <th class="product-quantity">تعداد</th>
+                                                    <th class="">گارانتی</th>
+                                                    <th class="">آپدیت</th>
+                                                    <th class="product-subtotal"> جمع کل + خدمات گارانتی</th>
+                                                    <th class="product-remove">حذف</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for item in cart %}
+                                                    <form method="POST"
+                                                              action="{% url 'cart:cart_add' item.product_obj.id %}">
+                                                            {% csrf_token %}
+                                                    <tr>
+                                                        <td class="product-thumbnail  text-left">
+                                                            <!-- Single-product start -->
+                                                            <div class="single-product">
+                                                                <div class="product-img">
+                                                                    <a href="{{ item.product_obj.get_absolute_url }}">
+                                                                        <img src="{{ item.product_obj.cover.url }}"
+                                                                             style="max-width: 80px; max-height: 80px;">
+                                                                    </a>
+                                                                </div>
+                                                                <div class="product-info">
+                                                                    <h6 class="post-title"><a class="text-light-black"
+                                                                                              href="{{ item.product_obj.get_absolute_url }}">{{ item.product_obj.title|truncatewords:3 }}</a>
+                                                                    </h6>
+                                                                    <p dir="rtl" class="mb-0">
+                                                                        مدل: {{ item.product_obj.model }}</p>
+                                                                    {% for color in item.product_obj.colors.all %}
+                                                                        <p dir="rtl" class="mb-0">
+                                                                            رنگ: {{ color.name }} </p>
+                                                                    {% endfor %}
+                                                                </div>
+                                                            </div>
+                                                            <!-- Single-product end -->
+                                                        </td>
+                                                        <td class="product-price">{{ item.product_obj.price }} تومان
+                                                        </td>
+                                                            <td class="product-quantity">
+                                                                <div class="cart-plus-minus">
+                                                                    <input type="text" value="{{ item.quantity }}"
+                                                                           name="quantity"
+                                                                           class="cart-plus-minus-box">
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <select name="guarantee" class="form-select" aria-label="Default select example">
+                                                                            <option value="ng" {% if item.guarantee_name == 'ng' %}selected{% endif %}>بدون گارانتی</option>
+                                                                            <option value="1y" {% if item.guarantee_name == '1y' %}selected{% endif %}>گارانتی یکساله</option>
+                                                                            <option value="2y" {% if item.guarantee_name == '2y' %}selected{% endif %}>گارانتی دو ساله</option>
+                                                                            <option value="3y" {% if item.guarantee_name == '3y' %}selected{% endif %}>گارانتی سه ساله</option>
+                                                                </select>
+                                                            </td>
+                                                            {{ item.product_update_quantity_form.inplace }}
+                                                            <td>
+                                                                <div>
+                                                                    <button type="submit" data-bs-toggle="tooltip" data-placement="top" title="Update">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                                             class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                                                            <path fill-rule="evenodd"
+                                                                                  d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                                                                            <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                                                                        </svg>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </form>
+                                                        <td class="product-subtotal">{{ item.total_price }} تومان</td>
+                                                        <td class="product-remove">
+                                                            <a href="{% url 'cart:cart_remove' item.product_obj.id %}"><i class="zmdi zmdi-close"></i></a>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                {% endfor %}
+                                            </table>
+                                            {% if cart.is_not_empty %}
+                                            <div class="floatleft">
+                                                <button onclick="window.location.href = '{% url 'cart:cart_clear' %}'"
+                                                        type="button" data-text="خالی کردن سبد خرید" class="button-one submit-button mt-15 floatright">
+                                                    خالی کردن سبد خرید</button>
+                                            </div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="customer-login mt-30">
+                                                <h4 dir="rtl" class="title-1 title-border text-uppercase">کد تخفیف</h4>
+                                                <p dir="rtl" class="text-gray">اگر کد تخفیف دارید در این قسمت وارد کنید:</p>
+                                                <input dir="rtl" type="text" placeholder="کد تخفیف شما...">
+                                                <button type="submit" data-text="ثبت سفارش"
+                                                        class="button-one submit-button mt-15">ثبت سفارش
+                                                </button>
+                                                <button type="submit" data-text="اعمال کد تخفیف"
+                                                        class="button-one submit-button mt-15 floatright">اعمال کد تخفیف
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="customer-login payment-details mt-30">
+                                                <h4 dir="rtl" class="title-1 title-border text-uppercase">اطلاعات فاکتور</h4>
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price_no_guarantee }} تومان </td>
+                                                        <td dir="rtl" class="text-left">جمع کل محصولات</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_guaranties_total_price }} تومان </td>
+                                                        <td dir="rtl" class="text-left">جمع کل گارانتی و خدمات</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">0 تومان </td>
+                                                        <td dir="rtl" class="text-left">مالیات</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="" class="text-end">{{ cart.get_total_price }} تومان </td>
+                                                        <td dir="rtl" class="text-left">جمع کل فاکتور</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                            {% else %}
+                                    <div dir="rtl" class="text-uppercase mb-0 text-center">
+                                        <p>سبد خرید شما خالی است.</p>
+                                        <a href="{% url 'products:products_list' %}">برو به محصولات</a>
+                                    </div>
+                            {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <br>
-    <p>Total Cart Price: {{ cart.get_total_price }}</p>
-    <a href="{% url 'orders:order_create' %}">Create Order</a>
+    <!-- SHOPPING-CART-AREA END -->
 {% endblock %}

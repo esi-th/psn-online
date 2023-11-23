@@ -15,7 +15,7 @@ class Guarantee(models.Model):
         (THREE_YEAR_GUARANTEE, '3 Years Guarantee'),
     ]
     name = models.CharField('Name', max_length=2, choices=GUARANTEE_CHOICES, default=NO_GUARANTEE)
-    price = models.PositiveIntegerField('Price')
+    price = models.IntegerField('Price')
     description = models.CharField('Description', max_length=500)
     datetime_created = models.DateTimeField('Created On', auto_now_add=True)
 
@@ -73,6 +73,7 @@ class Product(models.Model):
     description = models.TextField('Description')
     features = models.JSONField()
     price = models.PositiveIntegerField('Price')
+    cover = models.ImageField('Cover', upload_to='product_covers/', blank=True)
     company = models.ForeignKey(Company, on_delete=models.PROTECT, verbose_name='Company')
     model = models.ForeignKey(ProductModel, on_delete=models.PROTECT, verbose_name='Model')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category')
@@ -90,6 +91,11 @@ class Product(models.Model):
 
     def get_absolute_url(self):
         return reverse('products:product_detail', args=[self.id])
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Product, related_name='images', on_delete=models.CASCADE, verbose_name='Product')
+    image = models.ImageField('Image', upload_to='product_images/')
 
 
 class Review(models.Model):

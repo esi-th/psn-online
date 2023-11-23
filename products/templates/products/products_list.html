@@ -5,31 +5,165 @@
 {% endblock %}
 
 {% block content %}
-    <h1>Products List</h1>
-    <form action="{% url 'products:product_search' %}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="searched">
-    <input type="submit" value="Search">
-    </form>
-    Categories:
-        {% for cat in categories %}
-        <span>
-        {{ cat.name }} |
-        </span>
-    {% endfor %}
-    {% for product in products %}
-        <h3><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h3>
-        <a>Price: {{ product.price }}</a>
-        <span>
-        <a>Category: {{ product.category }}</a>
-        </span>
-        <br>
-    {% endfor %}
-        {% if products.has_previous %}
-        <a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}">Previous Page</a>
-    {% endif %}
-    <a>{{ products }} | {{ products.number }} | </a>
-    {% if products.has_next %}
-        <a href="{% url 'products:products_list' %}?page={{ products.next_page_number }}">Next Page</a>
-    {% endif %}
+            <!-- HEADING-BANNER START -->
+            <div class="heading-banner-area overlay-bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="heading-banner">
+                                <div class="heading-banner-title">
+                                    <h2>محصولات</h2>
+                                </div>
+                                <div class="breadcumbs pb-15">
+                                    <ul>
+                                        <li><a href="{% url 'home' %}">خانه</a></li>
+                                        <li>محصولات</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- HEADING-BANNER END -->
+            <!-- PRODUCT-AREA START -->
+            <div class="product-area pt-80 pb-80 product-style-2">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-12 col-xs-12">
+                            <!-- Shop-Content End -->
+                            <div class="shop-content mt-tab-30 mt-xs-30">
+                                <div class="product-option mb-30 clearfix">
+                                    <!-- Nav tabs -->
+                                    <ul class="shop-tab">
+                                        <li><a class="active" href="#grid-view" data-bs-toggle="tab"><i class="zmdi zmdi-view-module"></i></a></li>
+                                    </ul>
+                                    <div class="showing text-end d-none d-md-block">
+                                        <p class="mb-0"> نمایش صفحه {{ products.number }}, از {{ products.paginator.num_pages}} صفحه </p>
+                                    </div>
+                                </div>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="grid-view">
+                                        <div class="row">
+                                            <!-- Single-product start -->
+                                            {% for product in products %}
+                                            <div dir="rtl" class="col-lg-4 col-md-6">
+                                                <div class="single-product">
+                                                    <div class="product-img">
+                                                        <span class="pro-label new-label">new</span>
+                                                        <a href="{{ product.get_absolute_url }}"><img src="{{ product.cover.url }}" alt="" /></a>
+                                                    </div>
+                                                    <div class="product-info clearfix text-center">
+                                                        <div class="fix">
+                                                            <h4 class="post-title"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                                                        </div>
+                                                        <div>
+                                                            <a>{{ product.price }} تومان </a>
+                                                        </div>
+                                                        <div class="product-action clearfix">
+                                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                                            <a href="#" data-bs-toggle="modal"  data-bs-target="#productModal" title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>
+                                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i class="zmdi zmdi-refresh"></i></a>
+                                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- Single-product end -->
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Pagination start -->
+                        <!-- Pagination start -->
+                        <div class="shop-pagination  text-center">
+                            <div class="pagination">
+                                <ul>
+                                    {% if products.has_previous %}
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a></li>
+                                        <li><a class="active" href="#">{{ products.number }}</a></li>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+                                    {% endif %}
+                                    {% if products.has_next %}
+                                        <li><a class="active" href="{% url 'blog:posts_list' %}?page={{ products.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.next_page_number }}">{{ products.next_page_number }}</a></li>
+                                        <li><a class="active" href="#">{{ products.number }}</a></li>
+                                    {% endif %}
+                                </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- Pagination end -->
+                                <!-- Pagination end -->
+                            </div>
+                            <!-- Shop-Content End -->
+                        </div>
+                        <div class="col-md-3 col-sm-12 col-xs-12">
+                            <!-- Widget-Search start -->
+                            <aside dir="rtl" class="widget widget-search mb-30">
+                                <form action="{% url 'products:product_search' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="searched" type="text" placeholder="جستجو در محصولات..." />
+                                    <button type="submit">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </form>
+                            </aside>
+                            <!-- Widget-search end -->
+                            <!-- Widget-Categories start -->
+                            <aside dir="rtl" class="widget widget-categories  mb-30">
+                                <div class="widget-title">
+                                            <h4>دسته بندی ها</h4>
+                                        </div>
+                                        <div id="cat-treeview" class="widget-info product-cat boxscrol2">
+                                            <ul>
+                                                {% for cat in categories %}
+                                                    <li><span>{{ cat }}</span>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </aside>
+                            <!-- Widget-categories end -->
+                            <!-- Shop-Filter start -->
+                            <aside dir="rtl" class="widget shop-filter mb-30">
+                                <div class="widget-title">
+                                    <h4>محدوده قیمت</h4>
+                                </div>
+                                <div class="widget-info">
+                                    <div class="price_filter">
+                                        <div class="price_slider_amount">
+                                            <input type="submit"  value="حدود:"/>
+                                            <input type="text" id="amount" name="price"  placeholder="Add Your Price" />
+                                        </div>
+                                        <div id="slider-range"></div>
+                                    </div>
+                                </div>
+                            </aside>
+                            <!-- Shop-Filter end -->
+                            <!-- Widget-Color start -->
+                            <aside dir="rtl" class="widget widget-color mb-30">
+                                <div class="widget-title">
+                                    <h4>فیلتر بر اساس شرکت سازنده</h4>
+                                </div>
+                                <div class="widget-info color-filter clearfix">
+                                    <ul>
+                                        <li><a href="#"><span class="color color-1"></span>LightSalmon<span class="count">12</span></a></li>
+                                        <li><a href="#"><span class="color color-2"></span>Dark Salmon<span class="count">20</span></a></li>
+                                        <li><a href="#"><span class="color color-3"></span>Tomato<span class="count">59</span></a></li>
+                                        <li><a class="active" href="#"><span class="color color-4"></span>Deep Sky Blue<span class="count">45</span></a></li>
+                                        <li><a href="#"><span class="color color-5"></span>Electric Purple<span class="count">78</span></a></li>
+                                        <li><a href="#"><span class="color color-6"></span>Atlantis<span class="count">10</span></a></li>
+                                        <li><a href="#"><span class="color color-7"></span>Deep Lilac<span class="count">15</span></a></li>
+                                    </ul>
+                                </div>
+                            </aside>
+                            <!-- Widget-Color end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- PRODUCT-AREA END -->
 {% endblock %}
