@@ -1,0 +1,115 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <script
+            src="https://kit.fontawesome.com/64d58efce2.js"
+            crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="{% static 'css/accounts.css' %}"/>
+    <title>حساب کاربری</title>
+</head>
+<body>
+<div class="container">
+    <div class="forms-container">
+        <div class="signin-signup">
+            <form action="{% url 'account_login' %}" method="POST" class="sign-in-form">
+                {% csrf_token %}
+                <h2 class="title">ورود</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input name="login" type="email" placeholder="ایمیل"/>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input name="password" type="password" placeholder="رمز عبور"/>
+                </div>
+                <input type="submit" value="ورود" class="btn solid"/>
+                <a class="social-text" href="{% url 'account_reset_password' %}">رمز عبور خود را فراموش کرده اید؟</a>
+                <p class="social-text">ورود با شبکه های اجتمایی</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </form>
+            <form action="{% url 'account_signup' %}" method="POST" class="sign-up-form">
+                {% csrf_token %}
+                <h2 class="title">ثبت نام</h2>
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input name='email' type="email" placeholder="ایمیل"/>
+                </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input name='password1' type="password" placeholder="رمز عبور"/>
+                </div>
+                <br>
+                <div>
+                    <label dir="rtl" for=""><input required
+                                                   type="checkbox"> قوانین را خوانده و می پذیرم.
+                    </label>
+                </div>
+                <input type="submit" class="btn" value="ثبت نام"/>
+                <p class="social-text">ثبت نام با شبکه های اجتمایی</p>
+                <div class="social-media">
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-google"></i>
+                    </a>
+                    <a href="#" class="social-icon">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="panels-container">
+        <div class="panel left-panel">
+            <div class="content">
+                <h3>حساب کاربری ندارید؟</h3>
+                <p dir="rtl">
+                    با ثبت نام در Playstation.com از خدمات ما بهره ببرید.
+                </p>
+                <button class="btn transparent" id="sign-up-btn">
+                    ثبت نام
+                </button>
+            </div>
+            <img src="{% static 'accounts_img/register.png' %}" class="image" alt=""/>
+        </div>
+        <div class="panel right-panel">
+            <div class="content">
+                <h3>یکی از مایی؟</h3>
+                <p dir="rtl">
+                    ورود به حساب کاربری و ثبت سفارش.
+                </p>
+                <button class="btn transparent" id="sign-in-btn">
+                    ورود
+                </button>
+            </div>
+            <img src="{% static 'accounts_img/log.png' %}" class="image" alt=""/>
+        </div>
+    </div>
+</div>
+
+<script src="{% static 'js/login_signup.js' %}"></script>
+</body>
+</html>

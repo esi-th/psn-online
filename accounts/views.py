@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, reverse
+from django.views import generic
 
-# Create your views here.
+from orders.models import Order
+
+
+def account_page_view(request):
+    if request.user.is_authenticated:
+        return redirect(reverse('home'))
+    return render(request, 'accounts/account_hub.html')
+
