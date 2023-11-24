@@ -1,0 +1,129 @@
+{% extends '_base.html' %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+    <!-- HEADING-BANNER START -->
+    <div class="heading-banner-area overlay-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-banner">
+                        <div class="heading-banner-title">
+                            <h2>سفارش شماره {{ order.id }}</h2>
+                        </div>
+                        <div class="breadcumbs pb-15 floatright">
+                            <ul>
+                                <li>سفارش شماره {{ order.id }}</li>
+                                <li><a href="{% url 'accounts:dashboard' %}">داشبورد</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADING-BANNER END -->
+    <!-- order-complete start -->
+    <div class="tab-pane" id="order-complete">
+        <form action="#">
+            <div class="order-info bg-white text-center clearfix mb-30">
+                <div class="single-order-info">
+                    <h4 class="title-1 text-uppercase text-light-black mb-0">شماره سفارش</h4>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.id }}</strong></p>
+                </div>
+                <div class="single-order-info">
+                    <h4 class="title-1 text-uppercase text-light-black mb-0">تاریخ ایجاد</h4>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.datetime_created }}</strong></p>
+                </div>
+                <div class="single-order-info">
+                    <h4 class="title-1 text-uppercase text-light-black mb-0">جمع کل</h4>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.price }}</strong></p>
+                </div>
+                <div class="single-order-info">
+                    <h4 class="title-1 text-uppercase text-light-black mb-0">وضعیت پرداخت</h4>
+                    <p class="text-uppercase text-light-black mb-0"><a
+                            href="#"><strong>{{ order.order_status }}</strong></a></p>
+                </div>
+            </div>
+            <div class="shop-cart-table check-out-wrap">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div dir="rtl" class="our-order payment-details pr-20">
+                            <h4 dir="rtl" class="title-1 title-border text-uppercase mb-30">فاکتور سفارش</h4>
+                            <table>
+                                <style>
+                                    .wider-column {
+                                        width: 25%;
+                                    }
+                                </style>
+                                <thead>
+                                <tr>
+                                    <th class=""><strong>محصول</strong></th>
+                                    <th><strong>تعداد</strong></th>
+                                    <th><strong>گارانتی</strong></th>
+                                    <th class="text-end wider-column"><strong>جمع کل</strong></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for item in order.items.all %}
+                                    <tr>
+                                        <td>{{ item.product.title }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.guarantee }} + {{ item.guarantee_desc|truncatewords:3 }}</td>
+                                        <td>{{ item.price }} تومان</td>
+                                    </tr>
+                                {% endfor %}
+                                <tr>
+                                    <td>گارانتی خدمات</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-end">{{ cart.get_guaranties_total_price }} تومان</td>
+                                </tr>
+                                <tr>
+                                    <td>مبلغ قابل پرداخت</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td class="text-end">{{ order.price }} تومان</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- payment-method -->
+                    <div class="col-md-6 mt-xs-30">
+                        <div class="payment-method  pl-20">
+                            <h4 dir="rtl" class="title-1 title-border text-uppercase mb-30">روش پرداخت</h4>
+                            <div class="payment-accordion">
+                                <!-- Accordion start  -->
+                                <h3 dir="rtl" class="payment-accordion-toggle active">درگاه پرداخت بانک ملت</h3>
+                                <div class="payment-content default">
+                                    <p></p>
+                                </div>
+                                <!-- Accordion end -->
+                                <!-- Accordion start -->
+                                <h3 dir="rtl" class="payment-accordion-toggle">درگاه پرداخت بانک سامان</h3>
+                                <div class="payment-content">
+                                    <p></p>
+                                </div>
+                                <!-- Accordion end -->
+                                <!-- Accordion start -->
+                                <h3 dir="rtl" class="payment-accordion-toggle">درگاه پرداخت زرین پال</h3>
+                                <div class="payment-content">
+                                    <p></p>
+                                </div>
+                                <!-- Accordion end -->
+                                <button class="button-one submit-button mt-15" data-text="پرداخت" type="submit">
+                                    پرداخت
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <!-- order-complete end -->
+{% endblock content %}

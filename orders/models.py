@@ -20,7 +20,7 @@ class Order(models.Model):
         (CITY_SHIRAZ, 'Shiraz'),
         (CITY_ESFAHAN, 'Esfahan'),
     ]
-    user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name='User')
+    user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT, verbose_name='User', related_name='orders')
     is_paid = models.BooleanField('Is Paid?', default=False)
     price = models.PositiveIntegerField('Order Total Price', default=0)
     order_status = models.CharField('Order Status', max_length=10,

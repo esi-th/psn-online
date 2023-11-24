@@ -1,0 +1,298 @@
+{% extends '_base.html' %}
+
+
+{% block title %}{% endblock title %}
+
+
+{% block content %}
+    <!-- HEADING-BANNER START -->
+    <div class="heading-banner-area overlay-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-banner">
+                        <div class="heading-banner-title">
+                            <h2>داشبورد کاربری</h2>
+                        </div>
+                        <div class="breadcumbs pb-15 floatright">
+                            <ul>
+                                <li>داشبورد کاربری</li>
+                                <li><a href="{% url 'home' %}">خانه</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADING-BANNER END -->
+    <!-- CHECKOUT-AREA START -->
+    <div class="shopping-cart-area  pt-80 pb-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="shopping-cart">
+                        <!-- Nav tabs -->
+                        <ul class="cart-page-menu nav row clearfix mb-30">
+                            <li><a href="#order-complete" data-bs-toggle="tab">خروج</a></li>
+                            <li><a href="#wishlist" data-bs-toggle="tab">لیست علاقه مندی</a></li>
+                            <li><a href="#check-out" data-bs-toggle="tab">سفارشات من</a></li>
+                            <li><a class="active" href="#shopping-cart" data-bs-toggle="tab">اطلاعات کاربر</a></li>
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <!-- shopping-cart start -->
+                            <div class="tab-pane active" id="shopping-cart">
+                                    <div class="shop-cart-table">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="customer-login mt-30">
+                                                    <div class="author-photo floatright ml-15">
+                                                        <img src="{{ user.profile_picture.url }}" alt=""/>
+                                                    </div>
+                                                    <h4 dir="rtl" class="title-1 title-border text-uppercase">تغییر
+                                                        اطلاعات کاربری</h4>
+                                                    <p dir="rtl" class="text-gray">درصورتی که نیاز به عوض کردن رمز عبور
+                                                        ندارید فیلد های آن رو خالی بگذارید.</p>
+                                                    <h4 class="title-1 text-uppercase text-light-black mb-0">تصویر
+                                                        پروفایل</h4>
+                                                    <p class="text-light-black mb-0">
+                                                        <input type="file" name="profile_image" accept="image/*"
+                                                               class="form__input">
+                                                    </p>
+                                                    <input dir="rtl" type="password" name="new_password"
+                                                           id="new_password"
+                                                           class="form__input mt-10"
+                                                           placeholder="پسورد جدید را وارد کنید">
+                                                    <input dir="rtl" type="password" name="confirm_password"
+                                                           id="confirm_password"
+                                                           class="form__input mt-10" placeholder="تکرار پسورد جدید">
+                                                    <button type="submit" data-text="اعمال تغییرات"
+                                                            class="button-one submit-button mt-15 floatright">اعمال
+                                                        تغییرات
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="customer-login payment-details mt-30">
+                                                    <h4 dir="rtl" class="title-1 title-border text-uppercase">اطلاعات
+                                                        کاربری</h4>
+                                                    <table>
+                                                        <tbody>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.username }}</td>
+                                                            <td dir="rtl" class="text-left">نام کاربری</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.first_name }}</td>
+                                                            <td dir="rtl" class="text-left">نام</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.last_name }}</td>
+                                                            <td dir="rtl" class="text-left">نام خانوادگی</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.email }}</td>
+                                                            <td dir="rtl" class="text-left">ایمیل</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl"
+                                                                class="text-end">{{ user.orders.all|length }}</td>
+                                                            <td dir="rtl" class="text-left">تعداد سفارشات</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.date_joined }}</td>
+                                                            <td dir="rtl" class="text-left">تاریخ ساخت حساب</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end">{{ user.last_login }}</td>
+                                                            <td dir="rtl" class="text-left">آخرین ورود به حساب</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td dir="rtl" class="text-end"></td>
+                                                            <td dir="rtl" class="text-left"></td>
+                                                        </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- shopping-cart end -->
+                            <!-- wishlist start -->
+                            <div class="tab-pane" id="wishlist">
+                                    <div class="shop-cart-table">
+                                        <div class="table-content table-responsive">
+                                            <table>
+                                                <thead>
+                                                <tr>
+                                                    <th class="product-thumbnail">Product</th>
+                                                    <th class="product-price">Price</th>
+                                                    <th class="product-stock">stock status</th>
+                                                    <th class="product-add-cart">Add to cart</th>
+                                                    <th class="product-remove">Remove</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td class="product-thumbnail  text-left">
+                                                        <!-- Single-product start -->
+                                                        <div class="single-product">
+                                                            <div class="product-img">
+                                                                <a href="single-product.html"><img
+                                                                        src="img/product/2.jpg" alt=""/></a>
+                                                            </div>
+                                                            <div class="product-info">
+                                                                <h4 class="post-title"><a class="text-light-black"
+                                                                                          href="#">dummy product
+                                                                    name</a></h4>
+                                                                <p class="mb-0">Color : Black</p>
+                                                                <p class="mb-0">Size : SL</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Single-product end -->
+                                                    </td>
+                                                    <td class="product-price">$56.00</td>
+                                                    <td class="product-stock">in stock</td>
+                                                    <td class="product-add-cart">
+                                                        <a class="text-light-black" href="#"><i
+                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                    </td>
+                                                    <td class="product-remove">
+                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-thumbnail  text-left">
+                                                        <!-- Single-product start -->
+                                                        <div class="single-product">
+                                                            <div class="product-img">
+                                                                <a href="single-product.html"><img
+                                                                        src="img/product/12.jpg" alt=""/></a>
+                                                            </div>
+                                                            <div class="product-info">
+                                                                <h4 class="post-title"><a class="text-light-black"
+                                                                                          href="#">dummy product
+                                                                    name</a></h4>
+                                                                <p class="mb-0">Color : Black</p>
+                                                                <p class="mb-0">Size : SL</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Single-product end -->
+                                                    </td>
+                                                    <td class="product-price">$56.00</td>
+                                                    <td class="product-stock">in stock</td>
+                                                    <td class="product-add-cart">
+                                                        <a class="text-light-black" href="#"><i
+                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                    </td>
+                                                    <td class="product-remove">
+                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="product-thumbnail  text-left">
+                                                        <!-- Single-product start -->
+                                                        <div class="single-product">
+                                                            <div class="product-img">
+                                                                <a href="single-product.html"><img
+                                                                        src="img/product/6.jpg" alt=""/></a>
+                                                            </div>
+                                                            <div class="product-info">
+                                                                <h4 class="post-title"><a class="text-light-black"
+                                                                                          href="#">dummy product
+                                                                    name</a></h4>
+                                                                <p class="mb-0">Color : Black</p>
+                                                                <p class="mb-0">Size : SL</p>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Single-product end -->
+                                                    </td>
+                                                    <td class="product-price">$56.00</td>
+                                                    <td class="product-stock">in stock</td>
+                                                    <td class="product-add-cart">
+                                                        <a class="text-light-black" href="#"><i
+                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                                    </td>
+                                                    <td class="product-remove">
+                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- wishlist end -->
+                            <!-- check-out start -->
+                            <div class="tab-pane" id="check-out">
+                                <div class="shop-cart-table">
+                                    <div dir="rtl" class="table-content table-responsive">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th class="product-thumbnail">شماره سفارش</th>
+                                                <th class="product-quantity">تاریخ ایجاد</th>
+                                                <th class="product-price">جمع کل</th>
+                                                <th class="product-stock">وضعیت پرداخت</th>
+                                                <th class="product-add-cart">نمایش</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for order in user.orders.all %}
+                                                <tr>
+                                                    <td class="product-thumbnail  text-left">
+                                                        <!-- Single-product start -->
+                                                        <div class="single-product">
+                                                            <div class="product-img">
+                                                                <a href="#"><img
+                                                                        src="" alt=""/></a>
+                                                            </div>
+                                                            <div class="product-info">
+                                                                <h4 class="post-title"><a class="text-light-black"
+                                                                                          href="#">{{ order.id }}</a>
+                                                                </h4>
+                                                            </div>
+                                                        </div>
+                                                        <!-- Single-product end -->
+                                                    </td>
+                                                    <td class="product-price">{{ order.datetime_created }}</td>
+                                                    <td class="product-price">{{ order.price }} تومان </td>
+                                                    <td class="product-stock">{{ order.order_status }}</td>
+                                                    <td class="product-remove">
+                                                        <button onclick="window.location.href = '{% url 'accounts:order_detail' order.id %}'"
+                                                        type="button" data-text="نمایش" class="button-one submit-button mt-15">
+                                                    نمایش</button>
+                                                    </td>
+                                                </tr>
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- check-out end -->
+                            <!-- order-complete start -->
+                            <div class="tab-pane" id="order-complete">
+                                    <div class="thank-recieve bg-white mb-30">
+                                        <div class="row">
+                                            <div>
+                                                <form action="{% url 'account_logout' %}" method="POST">
+                                            {% csrf_token %}
+                                        <p>خروج از حساب کاربری؟</p>
+                                        <button type="submit" data-text="خروج از حساب" class="button-one submit-button mt-15 ">خروج از حساب</button>
+                                            </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                            </div>
+                            <!-- order-complete end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- CHECKOUT-AREA END -->
+{% endblock content %}
