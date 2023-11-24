@@ -5,5 +5,85 @@
 {% endblock %}
 
 {% block content %}
-    <h1>About US</h1>
+    			<!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>درباره ما</h2>
+								</div>
+								<div class="breadcumbs pb-15 floatright">
+									<ul>
+										<li>درباره ما</li>
+										<li><a href="{% url 'home' %}">خانه</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<!-- ABOUT-US-AREA START -->
+			<div class="about-us-area  pt-80 pb-80">
+				<div class="container">
+					<div class="about-us bg-white">
+						<div class="row">
+							<div class="col-lg-6">
+								<div class="about-photo">
+									<img style="" src="https://www.olsuae.com/img/company.jpg" alt="" />
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="about-brief bg-dark-white">
+									<h4 dir="rtl" class="title-1 title-border text-uppercase mb-30">درباره ما</h4>
+									<p dir="rtl">سایت paravelinc برای صفحه درباره ما و ایحاد ارتباط با بازدیدکننده به خوبی از تصاویر گروه خود استفاده کرده است. همچنین در ادامه نمونه ای از پروژه های انجام گرفته توسط گروه و همایش هایی که در آن حضور داشته اند قرار داده شده است. این نمونه از صفحه درباره ما انتخاب مناسبی برای شرکت های خدماتی و کوچک است. بررسی نمونه کارهای وبسیما در بخش طراحی سایت شرکتی میتواند ایده های جذابی را در این حوزه به شما معرفی کند</p>
+                                    <p dir="rtl">سایت paravelinc برای صفحه درباره ما و ایحاد ارتباط با بازدیدکننده به خوبی از تصاویر گروه خود استفاده کرده است. همچنین در ادامه نمونه ای از پروژه های انجام گرفته توسط گروه و همایش هایی که در آن حضور داشته اند قرار داده شده است. این نمونه از صفحه درباره ما انتخاب مناسبی برای شرکت های خدماتی و کوچک است. بررسی نمونه کارهای وبسیما در بخش طراحی سایت شرکتی میتواند ایده های جذابی را در این حوزه به شما معرفی کند</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ABOUT-US-AREA END -->
+			<!-- TEAM-MEMBER-AREA END -->
+			<div class="team-member-area pb-80">
+				<div class="container">
+					<!-- Section-title start -->
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="section-title text-center">
+								<h2 class="title-border">اعضای تیم</h2>
+							</div>
+						</div>
+					</div>
+					<!-- Section-title end -->
+					<div class="team-member">
+						<div class="row">
+                            {% for user in last_users %}
+							<div class="col-lg-3 col-md-6">
+								<div class="single-member text-center bg-white mt-25">
+									<img src="{{ user.profile_picture.url }}" alt="" />
+									<h3 class="text-uppercase mt-20">{{ user.username }}</h3>
+									<h4 class="text-uppercase text-gray">برنامه نویس ارشد</h4>
+									<p class="text-gray">{{ user.about_me }}</p>
+									<div class="team-social">
+										<ul>
+											<li><a href="#"><i class="zmdi zmdi-twitter"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-rss"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-facebook"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-linkedin"></i></a></li>
+											<li><a href="#"><i class="zmdi zmdi-pinterest"></i></a></li>
+										</ul>
+									</div>
+								</div>
+							</div>
+                            {% endfor %}
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- TEAM-MEMBER-AREA END -->
 {% endblock %}

@@ -1,15 +1,80 @@
 {% extends '_base.html' %}
+{% load static %}
 
 {% block title %}
-    Contact Us
+    تماس با ما
 {% endblock %}
 
 {% block content %}
-    <h1>Contact Us</h1>
-    <form action="{% url 'contact_us' %}" method="POST">
-        {% csrf_token %}
-        {{ contact_us_form.as_p }}
-        <input type="submit" value="Send Message">
-    </form>
+    <!-- HEADING-BANNER START -->
+			<div class="heading-banner-area overlay-bg">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="heading-banner">
+								<div class="heading-banner-title">
+									<h2>تماس با ما</h2>
+								</div>
+								<div class="breadcumbs pb-15 floatright">
+									<ul>
+										<li>تماس با ما</li>
+										<li><a href="{% url 'home' %}">خانه</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- HEADING-BANNER END -->
+			<!-- contact-us-AREA START -->
+			<div class="contact-us-area  pt-80 pb-80">
+				<div class="container">
+					<div class="contact-us customer-login bg-white">
+						<div class="row">
+							<div class="col-lg-4 col-md-5">
+								<div class="contact-details">
+									<h4 class="title-1 title-border text-uppercase mb-30">اطلاعات تماس</h4>
+									<ul>
+										<li>
+											<i class="zmdi zmdi-pin"></i>
+											<span>اسماعیل طاهری</span>
+											<span>برنامه نویس بک اند</span>
+										</li>
+										<li>
+											<i class="zmdi zmdi-phone"></i>
+											<span>+989122224466</span>
+                                            <span>+989122224466</span>
+										</li>
+										<li>
+											<i class="zmdi zmdi-email"></i>
+											<span>esi.taheri@yahoo.com</span>
+											<span>GitHub: <a href="https://github.com/esi-th/">گیت هاب من</a></span>
+										</li>
+									</ul>
+								</div>
+								<div class="send-message mt-60">
+									<form id="contact-form" method="POST" action="{% url 'contact_us' %}">
+                                        {% csrf_token %}
+										<h4 dir="rtl" class="title-1 title-border text-uppercase mb-30">ارسال پیام</h4>
+										<input dir="rtl" type="text" name="message_name" placeholder="نام" />
+										<input dir="rtl"  type="text" name="message_email" placeholder="ایمیل" />
+										<textarea dir="rtl" class="custom-textarea" name="message_note" placeholder="پیام شما"></textarea>
+										<button class="button-one submit-button mt-20" data-text="ارسال پیام" type="submit">ارسال پیام</button>
+									</form>
+								</div>
+							</div>
+							<div class="col-lg-8 col-md-7 mt-xs-30">
+								<div class="map-area">
+									<div style="width:100%;height:100px;"></div>
+                                    <img src="{% static 'img/contact.png' %}">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- ABOUT-US-AREA END -->
+
 {% endblock %}
 
