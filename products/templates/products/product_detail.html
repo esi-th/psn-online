@@ -76,7 +76,7 @@
                                     <a href="javascript:{}" data-bs-toggle="tooltip" data-placement="top"
                                        onclick="document.getElementById('cart_add').submit(); return false;"
                                        title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                    <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"
+                                    <a href="{% url 'accounts:wishlist_add' product.id %}" data-bs-toggle="tooltip" data-placement="top"
                                        title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
                                     <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i
                                             class="zmdi zmdi-refresh"></i></a>
