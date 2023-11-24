@@ -17,7 +17,7 @@ class Cart:
 
         self.cart = cart
 
-    def add(self, product, quantity=1, replace_quantity=False, guarantee_name=None):
+    def add(self, product, quantity=1, replace_quantity=False, guarantee_name='ng'):
         product_id = str(product.id)
 
         if product_id not in self.cart:

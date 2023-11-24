@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .forms import CustomUserChangeForm, CustomUserCreationForm
-from .models import CustomUser
+from .models import CustomUser, Wishlist
 from django.contrib.auth.admin import UserAdmin
+from django.contrib import admin
 
 
 @admin.register(CustomUser)
@@ -16,6 +17,10 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('profile_picture', 'about_me', )}),
     )
 
+
+@admin.register(Wishlist)
+class WishlistAdmin(admin.ModelAdmin):
+    list_display = ['user', 'product', 'datetime_created', ]
 
 
 

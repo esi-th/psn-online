@@ -43,186 +43,148 @@
                         <div class="tab-content">
                             <!-- shopping-cart start -->
                             <div class="tab-pane active" id="shopping-cart">
-                                    <div class="shop-cart-table">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="customer-login mt-30">
-                                                    <div class="author-photo floatright ml-15">
-                                                        <img src="{{ user.profile_picture.url }}" alt=""/>
-                                                    </div>
-                                                    <h4 dir="rtl" class="title-1 title-border text-uppercase">تغییر
-                                                        اطلاعات کاربری</h4>
-                                                    <p dir="rtl" class="text-gray">درصورتی که نیاز به عوض کردن رمز عبور
-                                                        ندارید فیلد های آن رو خالی بگذارید.</p>
-                                                    <h4 class="title-1 text-uppercase text-light-black mb-0">تصویر
-                                                        پروفایل</h4>
-                                                    <p class="text-light-black mb-0">
-                                                        <input type="file" name="profile_image" accept="image/*"
-                                                               class="form__input">
-                                                    </p>
-                                                    <input dir="rtl" type="password" name="new_password"
-                                                           id="new_password"
-                                                           class="form__input mt-10"
-                                                           placeholder="پسورد جدید را وارد کنید">
-                                                    <input dir="rtl" type="password" name="confirm_password"
-                                                           id="confirm_password"
-                                                           class="form__input mt-10" placeholder="تکرار پسورد جدید">
-                                                    <button type="submit" data-text="اعمال تغییرات"
-                                                            class="button-one submit-button mt-15 floatright">اعمال
-                                                        تغییرات
-                                                    </button>
+                                <div class="shop-cart-table">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="customer-login mt-30">
+                                                <div class="author-photo floatright ml-15">
+                                                    <img src="{{ user.profile_picture.url }}" alt=""/>
                                                 </div>
+                                                <h4 dir="rtl" class="title-1 title-border text-uppercase">تغییر
+                                                    اطلاعات کاربری</h4>
+                                                <p dir="rtl" class="text-gray">درصورتی که نیاز به عوض کردن رمز عبور
+                                                    ندارید فیلد های آن رو خالی بگذارید.</p>
+                                                <h4 class="title-1 text-uppercase text-light-black mb-0">تصویر
+                                                    پروفایل</h4>
+                                                <p class="text-light-black mb-0">
+                                                    <input type="file" name="profile_image" accept="image/*"
+                                                           class="form__input">
+                                                </p>
+                                                <input dir="rtl" type="password" name="new_password"
+                                                       id="new_password"
+                                                       class="form__input mt-10"
+                                                       placeholder="پسورد جدید را وارد کنید">
+                                                <input dir="rtl" type="password" name="confirm_password"
+                                                       id="confirm_password"
+                                                       class="form__input mt-10" placeholder="تکرار پسورد جدید">
+                                                <button type="submit" data-text="اعمال تغییرات"
+                                                        class="button-one submit-button mt-15 floatright">اعمال
+                                                    تغییرات
+                                                </button>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="customer-login payment-details mt-30">
-                                                    <h4 dir="rtl" class="title-1 title-border text-uppercase">اطلاعات
-                                                        کاربری</h4>
-                                                    <table>
-                                                        <tbody>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.username }}</td>
-                                                            <td dir="rtl" class="text-left">نام کاربری</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.first_name }}</td>
-                                                            <td dir="rtl" class="text-left">نام</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.last_name }}</td>
-                                                            <td dir="rtl" class="text-left">نام خانوادگی</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.email }}</td>
-                                                            <td dir="rtl" class="text-left">ایمیل</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl"
-                                                                class="text-end">{{ user.orders.all|length }}</td>
-                                                            <td dir="rtl" class="text-left">تعداد سفارشات</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.date_joined }}</td>
-                                                            <td dir="rtl" class="text-left">تاریخ ساخت حساب</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end">{{ user.last_login }}</td>
-                                                            <td dir="rtl" class="text-left">آخرین ورود به حساب</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td dir="rtl" class="text-end"></td>
-                                                            <td dir="rtl" class="text-left"></td>
-                                                        </tr>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="customer-login payment-details mt-30">
+                                                <h4 dir="rtl" class="title-1 title-border text-uppercase">اطلاعات
+                                                    کاربری</h4>
+                                                <table>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.username }}</td>
+                                                        <td dir="rtl" class="text-left">نام کاربری</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.first_name }}</td>
+                                                        <td dir="rtl" class="text-left">نام</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.last_name }}</td>
+                                                        <td dir="rtl" class="text-left">نام خانوادگی</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.email }}</td>
+                                                        <td dir="rtl" class="text-left">ایمیل</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl"
+                                                            class="text-end">{{ user.orders.all|length }}</td>
+                                                        <td dir="rtl" class="text-left">تعداد سفارشات</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.date_joined }}</td>
+                                                        <td dir="rtl" class="text-left">تاریخ ساخت حساب</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end">{{ user.last_login }}</td>
+                                                        <td dir="rtl" class="text-left">آخرین ورود به حساب</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td dir="rtl" class="text-end"></td>
+                                                        <td dir="rtl" class="text-left"></td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                             <!-- shopping-cart end -->
                             <!-- wishlist start -->
                             <div class="tab-pane" id="wishlist">
-                                    <div class="shop-cart-table">
-                                        <div class="table-content table-responsive">
-                                            <table>
-                                                <thead>
-                                                <tr>
-                                                    <th class="product-thumbnail">Product</th>
-                                                    <th class="product-price">Price</th>
-                                                    <th class="product-stock">stock status</th>
-                                                    <th class="product-add-cart">Add to cart</th>
-                                                    <th class="product-remove">Remove</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td class="product-thumbnail  text-left">
+                                <div class="shop-cart-table">
+                                    <div dir="rtl" class="table-content table-responsive">
+                                        <table>
+                                            <thead>
+                                            <tr>
+                                                <th class="product-thumbnail">محصول</th>
+                                                <th class="product-price">قیمت</th>
+                                                <th class="product-stock">موجودی</th>
+                                                <th class="product-add-cart">اضافه به سبد خرید</th>
+                                                <th class="product-remove">حذف از لیست علاقه مندی ها</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td class="product-thumbnail  text-left">
+                                                    {% for item in user.wishlist.all %}
                                                         <!-- Single-product start -->
                                                         <div class="single-product">
                                                             <div class="product-img">
-                                                                <a href="single-product.html"><img
-                                                                        src="img/product/2.jpg" alt=""/></a>
+                                                                <a href="{{ item.product.get_absolute_url }}"><img
+                                                                        src="{{ item.product.cover.url }}" alt=""/></a>
                                                             </div>
                                                             <div class="product-info">
                                                                 <h4 class="post-title"><a class="text-light-black"
-                                                                                          href="#">dummy product
-                                                                    name</a></h4>
-                                                                <p class="mb-0">Color : Black</p>
-                                                                <p class="mb-0">Size : SL</p>
+                                                                                          href="#">{{ item.product.title|truncatewords:3 }}
+                                                                </a></h4>
+                                                                <p class="mb-0">مدل: {{ item.product.model }}</p>
                                                             </div>
                                                         </div>
                                                         <!-- Single-product end -->
-                                                    </td>
-                                                    <td class="product-price">$56.00</td>
-                                                    <td class="product-stock">in stock</td>
-                                                    <td class="product-add-cart">
-                                                        <a class="text-light-black" href="#"><i
-                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                    </td>
-                                                    <td class="product-remove">
-                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="product-thumbnail  text-left">
-                                                        <!-- Single-product start -->
-                                                        <div class="single-product">
-                                                            <div class="product-img">
-                                                                <a href="single-product.html"><img
-                                                                        src="img/product/12.jpg" alt=""/></a>
-                                                            </div>
-                                                            <div class="product-info">
-                                                                <h4 class="post-title"><a class="text-light-black"
-                                                                                          href="#">dummy product
-                                                                    name</a></h4>
-                                                                <p class="mb-0">Color : Black</p>
-                                                                <p class="mb-0">Size : SL</p>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Single-product end -->
-                                                    </td>
-                                                    <td class="product-price">$56.00</td>
-                                                    <td class="product-stock">in stock</td>
-                                                    <td class="product-add-cart">
-                                                        <a class="text-light-black" href="#"><i
-                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                    </td>
-                                                    <td class="product-remove">
-                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="product-thumbnail  text-left">
-                                                        <!-- Single-product start -->
-                                                        <div class="single-product">
-                                                            <div class="product-img">
-                                                                <a href="single-product.html"><img
-                                                                        src="img/product/6.jpg" alt=""/></a>
-                                                            </div>
-                                                            <div class="product-info">
-                                                                <h4 class="post-title"><a class="text-light-black"
-                                                                                          href="#">dummy product
-                                                                    name</a></h4>
-                                                                <p class="mb-0">Color : Black</p>
-                                                                <p class="mb-0">Size : SL</p>
-                                                            </div>
-                                                        </div>
-                                                        <!-- Single-product end -->
-                                                    </td>
-                                                    <td class="product-price">$56.00</td>
-                                                    <td class="product-stock">in stock</td>
-                                                    <td class="product-add-cart">
-                                                        <a class="text-light-black" href="#"><i
-                                                                class="zmdi zmdi-shopping-cart-plus"></i></a>
-                                                    </td>
-                                                    <td class="product-remove">
-                                                        <a href="#"><i class="zmdi zmdi-close"></i></a>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                                        </td>
+                                                        <td class="product-price">{{ item.product.price }}</td>
+                                                        {% if item.product.inventory %}
+                                                        <td class="product-stock">موجود در انبار</td>
+                                                            {% else %}
+                                                            <td class="product-stock">اتمام موجودی</td>
+                                                        {% endif %}
+                                                        <form method="POST"
+                                                              action="{% url 'cart:cart_add' item.product.id %}">
+                                                            {% csrf_token %}
+                                                            <td class="product-add-cart">
+                                                                <input type="hidden" class="quantity-input"
+                                                                       name="quantity" id="qty"
+                                                                       value="1"
+                                                                       min="1" max="30">
+                                                                <input name="guarantee" type="hidden" value="ng">
+                                                                <button type="submit" data-text="اضافه به سبد خرید"
+                                                                        class="button-one submit-button mt-15">
+                                                                    اضافه به سبد خرید
+                                                                </button>
+                                                            </td>
+                                                        </form>
+                                                        <td class="product-remove">
+                                                            <a href="{% url 'accounts:wishlist_remove' item.product.id %}"><i class="zmdi zmdi-close"></i></a>
+                                                        </td>
+                                                        </tr>
+                                                        <tr>
+                                                        <td class="product-thumbnail  text-left">
+                                                    {% endfor %}
+                                            </tbody>
+                                        </table>
                                     </div>
+                                </div>
                             </div>
                             <!-- wishlist end -->
                             <!-- check-out start -->
@@ -258,12 +220,14 @@
                                                         <!-- Single-product end -->
                                                     </td>
                                                     <td class="product-price">{{ order.datetime_created }}</td>
-                                                    <td class="product-price">{{ order.price }} تومان </td>
+                                                    <td class="product-price">{{ order.price }} تومان</td>
                                                     <td class="product-stock">{{ order.order_status }}</td>
                                                     <td class="product-remove">
                                                         <button onclick="window.location.href = '{% url 'accounts:order_detail' order.id %}'"
-                                                        type="button" data-text="نمایش" class="button-one submit-button mt-15">
-                                                    نمایش</button>
+                                                                type="button" data-text="نمایش"
+                                                                class="button-one submit-button mt-15">
+                                                            نمایش
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             {% endfor %}
@@ -275,17 +239,19 @@
                             <!-- check-out end -->
                             <!-- order-complete start -->
                             <div class="tab-pane" id="order-complete">
-                                    <div class="thank-recieve bg-white mb-30">
-                                        <div class="row">
-                                            <div>
-                                                <form action="{% url 'account_logout' %}" method="POST">
-                                            {% csrf_token %}
-                                        <p>خروج از حساب کاربری؟</p>
-                                        <button type="submit" data-text="خروج از حساب" class="button-one submit-button mt-15 ">خروج از حساب</button>
+                                <div class="thank-recieve bg-white mb-30">
+                                    <div class="row">
+                                        <div>
+                                            <form action="{% url 'account_logout' %}" method="POST">
+                                                {% csrf_token %}
+                                                <p>خروج از حساب کاربری؟</p>
+                                                <button type="submit" data-text="خروج از حساب"
+                                                        class="button-one submit-button mt-15 ">خروج از حساب
+                                                </button>
                                             </form>
-                                            </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                             <!-- order-complete end -->
                         </div>
