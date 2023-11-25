@@ -496,7 +496,8 @@ pre{
     padding-right:50px
 }
 .single-banner img{
-    width:100%
+    width:100%;
+    border-radius: 5%;
 }
 .sidebar-social{
     bottom:0;
@@ -607,7 +608,9 @@ pre{
 }
 .product-slider.style-1 .single-product{
     padding-left:15px;
-    padding-right:15px
+    padding-right:15px;
+    border-radius: 5%;
+
 }
 .product-slider.style-2{
     background-color:transparent;
@@ -623,7 +626,8 @@ pre{
 }
 .single-product{
     padding-top:15px;
-    transition:all .5s ease 0s
+    transition:all .5s ease 0s;
+    border-radius: 5%;
 }
 .product-img{
     overflow:hidden;
@@ -842,7 +846,8 @@ pre{
 }
 .blog-photo img{
     width:100%;
-    transition:all .5s ease 0s
+    transition:all .5s ease 0s;
+    border-radius: 5%;
 }
 .blog-photo a{
     display:block

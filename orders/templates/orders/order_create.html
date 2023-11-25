@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     Order Create
@@ -38,22 +41,22 @@
                                                                 {% for item in cart %}
 																	<tr>
 																		<td>{{ item.product_obj.title }}</td>
-																		<td>{{ item.quantity }}</td>
+																		<td>{{ item.quantity|translate_number }}</td>
                                                                         <td>{{ item.guarantee_name }} + {{ item.guarantee_desc|truncatewords:3 }}</td>
-                                                                        <td>{{ item.total_price }} تومان </td>
+                                                                        <td>{{ item.total_price|intcomma:False|translate_number }} تومان </td>
 																	</tr>
                                                                 {% endfor %}
                                                                     <tr>
                                                                         <td>گارانتی خدمات</td>
                                                                         <td></td>
                                                                         <td></td>
-																		<td class="text-end">{{ cart.get_guaranties_total_price }} تومان </td>
+																		<td class="text-end">{{ cart.get_guaranties_total_price|intcomma:False|translate_number }} تومان </td>
                                                                     </tr>
                                                                 <tr>
 																		<td>مبلغ قابل پرداخت</td>
                                                                         <td></td>
                                                                         <td></td>
-																		<td class="text-end">{{ cart.get_total_price }} تومان </td>
+																		<td class="text-end">{{ cart.get_total_price|intcomma:False|translate_number }} تومان </td>
 																	</tr>
 																</tbody>
 															</table>

@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     Products
@@ -39,7 +42,7 @@
                                         <li><a class="active" href="#grid-view" data-bs-toggle="tab"><i class="zmdi zmdi-view-module"></i></a></li>
                                     </ul>
                                     <div class="showing text-end d-none d-md-block">
-                                        <p class="mb-0"> نمایش صفحه {{ products.number }}, از {{ products.paginator.num_pages}} صفحه </p>
+                                        <p class="mb-0"> نمایش صفحه {{ products.number|translate_number }}, از {{ products.paginator.num_pages|translate_number}} صفحه </p>
                                     </div>
                                 </div>
                                 <!-- Tab panes -->
@@ -59,7 +62,7 @@
                                                             <h4 class="post-title"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
                                                         </div>
                                                         <div>
-                                                            <a>{{ product.price }} تومان </a>
+                                                            <a class="pro-price">{{ product.price|intcomma:False|translate_number }} تومان </a>
                                                         </div>
                                                         <div class="product-action clearfix">
                                                             <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top" title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
@@ -81,14 +84,14 @@
                             <div class="pagination">
                                 <ul>
                                     {% if products.has_previous %}
-                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a></li>
-                                        <li><a class="active" href="#">{{ products.number }}</a></li>
-                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number|translate_number }}">{{ products.previous_page_number|translate_number }}</a></li>
+                                        <li><a class="active" href="#">{{ products.number|translate_number }}</a></li>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number|translate_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
                                     {% endif %}
                                     {% if products.has_next %}
-                                        <li><a class="active" href="{% url 'products:products_list' %}?page={{ products.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
-                                        <li><a href="{% url 'products:products_list' %}?page={{ products.next_page_number }}">{{ products.next_page_number }}</a></li>
-                                        <li><a class="active" href="#">{{ products.number }}</a></li>
+                                        <li><a class="active" href="{% url 'products:products_list' %}?page={{ products.next_page_number|translate_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.next_page_number|translate_number }}">{{ products.next_page_number|translate_number }}</a></li>
+                                        <li><a class="active" href="#">{{ products.number|translate_number }}</a></li>
                                     {% endif %}
                                 </li>
                                 </ul>

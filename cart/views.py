@@ -28,7 +28,6 @@ def add_to_cart_view(request, product_id):
     if form.is_valid():
         cleaned_data = form.cleaned_data
         quantity = cleaned_data['quantity']
-        print(quantity, product, cleaned_data['guarantee'], cleaned_data['inplace'])
         cart.add(product, quantity, replace_quantity=cleaned_data['inplace'], guarantee_name=cleaned_data['guarantee'])
 
     return redirect('cart:cart_detail')

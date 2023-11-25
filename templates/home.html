@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     خانه
@@ -77,22 +80,7 @@
                 <div class="table-cell">
                     <ul>
                         <li><a class="search-open" href="#" title="Search"><i class="zmdi zmdi-search"></i></a></li>
-                        <li><a href="#" title="Login"><i class="zmdi zmdi-lock"></i></a>
-                            <div class="customer-login text-left">
-                                <form action="#">
-                                    <h4 class="title-1 title-border text-uppercase mb-30">Registered customers</h4>
-                                    <p class="text-gray">If you have an account with us, Please login!</p>
-                                    <input type="text" name="email" placeholder="Email here..."/>
-                                    <input type="password" placeholder="Password"/>
-                                    <p><a class="text-gray" href="#">Forget your password?</a></p>
-                                    <button class="button-one submit-button mt-15" data-text="login" type="submit">
-                                        login
-                                    </button>
-                                </form>
-                            </div>
-                        </li>
-                        <li><a href="my-account.html" title="My-Account"><i class="zmdi zmdi-account"></i></a></li>
-                        <li><a href="wishlist.html" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a></li>
+                        <li><a href="{% url 'accounts:dashboard' %} " title="علاقه مندی ها"><i class="zmdi zmdi-favorite"></i></a></li>
                     </ul>
                 </div>
             </div>
@@ -109,11 +97,13 @@
                         <div class="col-md-8 offset-md-2 p-0">
                             <div class="search-form-wrap">
                                 <button class="close-search"><i class="zmdi zmdi-close"></i></button>
-                                <form action="#">
-                                    <input type="text" placeholder="Search here..."/>
+                                <form action="{% url 'products:product_search' %}" method="POST">
+                                    {% csrf_token %}
+                                    <input name="searched" dir="rtl" type="text" placeholder="جستجو..."/>
                                     <button class="search-button" type="submit">
                                         <i class="zmdi zmdi-search"></i>
                                     </button>
+                               </form>
                                 </form>
                             </div>
                         </div>
@@ -165,8 +155,8 @@
 
                                 </div>
                                 <div dir="rtl" class="fix">
-                                    <p dir="rtl" class="floatleft hidden-sm d-none d-md-block"> مدل: {{ product.model }} </p>
-                                    <span class="pro-price floatright">{{ product.price }} تومان </span>
+                                    <p dir="rtl" class="floatleft hidden-sm d-none d-md-block floatright"> مدل: {{ product.model }} </p>
+                                    <span class="pro-price floatleft">{{ product.price|intcomma:False|translate_number }} تومان </span>
                                 </div>
                             </div>
                         </div>
@@ -267,7 +257,7 @@
                                         </div>
                                         <div dir="rtl" class="fix">
                                             <p class="floatright hidden-sm">مدل : {{ product.model }}</p>
-                                            <span class="pro-price floatleft">{{ product.price }} تومان </span>
+                                            <span class="pro-price floatleft">{{ product.price|intcomma:False|translate_number }} تومان </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1114,13 +1104,13 @@
                     {% for post in posts %}
                 <div class="col-lg-6">
                     <div class="single-blog mt-30">
-                        <div class="row">
+                        <div class="row mb-30">
                             <div class="col-xl-6 col-md-7">
                                 <div class="blog-info">
                                     <div class="post-meta fix">
-                                        <div class="post-date floatleft"><span class="text-dark-red">{{ post.datetime_created.day }}</span></div>
+                                        <div class="post-date floatleft"><span class="text-dark-red">{{ post.datetime_created.day|translate_number }}</span></div>
                                         <div class="post-year floatleft">
-                                            <p dir="rtl" class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|date:"F" }}, {{ post.datetime_created.year }}</p>
+                                            <p dir="rtl" class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</p>
                                             <h4 dir="rtl" class="post-title"><a href="{{ post.get_absolute_url }}" tabindex="0">{{ post.title }}</a>
                                             </h4>
                                         </div>
@@ -1129,20 +1119,21 @@
                                         <a href="#"><i
                                                 class="zmdi zmdi-collection-text"></i><span> نویسنده: {{ post.author }}</span></a>
                                         <a href="#"><i
-                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count }}</span></a>
+                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count|translate_number }}</span></a>
                                         <a href="#"><i
-                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count }}</span></a>
+                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count|translate_number }}</span></a>
                                     </div>
                                     <p dir="rtl"> {{ post.content|truncatewords:25 }}</p>
                                     <a dir="rtl" href="{{ post.get_absolute_url }}" class="button-2 text-dark-red floatright">ادامه مطلب...</a>
                                 </div>
                             </div>
-                            <div class="col-xl-6 col-md-5">
+                            <div class="col-xl-6 col-md-5 mt-15">
                                 <div class="blog-photo">
                                     <a href="{{ post.get_absolute_url }}"><img src="{{ post.cover.url }}" alt=""/></a>
                                 </div>
                             </div>
                         </div>
+                        <div class="row"></div>
                     </div>
                 </div>
                 {% endfor %}

@@ -1,5 +1,7 @@
 {% extends '_base.html' %}
-
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}{% endblock title %}
 
@@ -12,11 +14,11 @@
                 <div class="col-md-12">
                     <div class="heading-banner">
                         <div class="heading-banner-title">
-                            <h2>سفارش شماره {{ order.id }}</h2>
+                            <h2>سفارش شماره {{ order.id|translate_number }}</h2>
                         </div>
                         <div class="breadcumbs pb-15 floatright">
                             <ul>
-                                <li>سفارش شماره {{ order.id }}</li>
+                                <li>سفارش شماره {{ order.id|translate_number }}</li>
                                 <li><a href="{% url 'accounts:dashboard' %}">داشبورد</a></li>
                             </ul>
                         </div>
@@ -32,15 +34,15 @@
             <div class="order-info bg-white text-center clearfix mb-30">
                 <div class="single-order-info">
                     <h4 class="title-1 text-uppercase text-light-black mb-0">شماره سفارش</h4>
-                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.id }}</strong></p>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.id|translate_number }}</strong></p>
                 </div>
                 <div class="single-order-info">
                     <h4 class="title-1 text-uppercase text-light-black mb-0">تاریخ ایجاد</h4>
-                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.datetime_created }}</strong></p>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</strong></p>
                 </div>
-                <div class="single-order-info">
+                <div dir="rtl" class="single-order-info">
                     <h4 class="title-1 text-uppercase text-light-black mb-0">جمع کل</h4>
-                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.price }}</strong></p>
+                    <p class="text-uppercase text-light-black mb-0"><strong>{{ order.price|intcomma:False|translate_number }} تومان </strong></p>
                 </div>
                 <div class="single-order-info">
                     <h4 class="title-1 text-uppercase text-light-black mb-0">وضعیت پرداخت</h4>
@@ -71,22 +73,22 @@
                                 {% for item in order.items.all %}
                                     <tr>
                                         <td>{{ item.product.title }}</td>
-                                        <td>{{ item.quantity }}</td>
+                                        <td>{{ item.quantity|translate_number }}</td>
                                         <td>{{ item.guarantee }} + {{ item.guarantee_desc|truncatewords:3 }}</td>
-                                        <td>{{ item.price }} تومان</td>
+                                        <td>{{ item.price|intcomma:False|translate_number }} تومان</td>
                                     </tr>
                                 {% endfor %}
                                 <tr>
                                     <td>گارانتی خدمات</td>
                                     <td></td>
                                     <td></td>
-                                    <td class="text-end">{{ cart.get_guaranties_total_price }} تومان</td>
+                                    <td class="text-end">{{ cart.get_guaranties_total_price|intcomma:False|translate_number }} تومان</td>
                                 </tr>
                                 <tr>
                                     <td>مبلغ قابل پرداخت</td>
                                     <td></td>
                                     <td></td>
-                                    <td class="text-end">{{ order.price }} تومان</td>
+                                    <td class="text-end">{{ order.price|intcomma:False|translate_number }} تومان</td>
                                 </tr>
                                 </tbody>
                             </table>

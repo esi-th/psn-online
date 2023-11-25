@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     Posts
@@ -57,7 +60,7 @@
                             </div>
                             <!-- Categories end -->
                             <div class="showing text-end d-none d-md-block">
-                                <p class="mb-0"> نمایش صفحه {{ posts.number }}, از {{ posts.paginator.num_pages}} صفحه </p>
+                                <p class="mb-0"> نمایش صفحه {{ posts.number|translate_number }}, از {{ posts.paginator.num_pages|translate_number }} صفحه </p>
                             </div>
                         </div>
                     </div>
@@ -75,17 +78,17 @@
                                         <a href="#"><i
                                                 class="zmdi zmdi-collection-text"></i><span> نویسنده: {{ post.author }}</span></a>
                                         <a href="#"><i
-                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count }}</span></a>
+                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count|translate_number }}</span></a>
                                         <a href="#"><i
-                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count }}</span></a>
+                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count|translate_number }}</span></a>
                                     </div>
                                 </div>
                                 <div class="blog-info">
                                     <div class="post-meta fix">
                                         <div class="post-date floatleft"><span
-                                                class="text-dark-red">{{ post.datetime_created.day }}</span></div>
+                                                class="text-dark-red">{{ post.datetime_created.day|translate_number }}</span></div>
                                         <div class="post-year floatleft">
-                                            <p class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|date:"F" }}, {{ post.datetime_created.year }}</p>
+                                            <p class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</p>
                                             <h4 class="post-title"><a href="{{ post.get_absolute_url }}"
                                                                       tabindex="0">{{ post.title }}</a></h4>
                                         </div>
@@ -105,14 +108,14 @@
                             <div class="pagination">
                                 <ul>
                                     {% if posts.has_previous %}
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}">{{ posts.previous_page_number }}</a></li>
-                                        <li><a class="active" href="#">{{ posts.number }}</a></li>
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number|translate_number }}">{{ posts.previous_page_number|translate_number }}</a></li>
+                                        <li><a class="active" href="#">{{ posts.number|translate_number }}</a></li>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.previous_page_number|translate_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
                                     {% endif %}
                                     {% if posts.has_next %}
-                                        <li><a class="active" href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number }}">{{ posts.next_page_number }}</a></li>
-                                        <li><a class="active" href="#">{{ posts.number }}</a></li>
+                                        <li><a class="active" href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number|translate_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                                        <li><a href="{% url 'blog:posts_list' %}?page={{ posts.next_page_number|translate_number }}">{{ posts.next_page_number|translate_number }}</a></li>
+                                        <li><a class="active" href="#">{{ posts.number|translate_number }}</a></li>
                                     {% endif %}
                                 </li>
                                 </ul>

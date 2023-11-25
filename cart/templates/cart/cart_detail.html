@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     Cart Detail
@@ -61,7 +64,7 @@
                                                             </div>
                                                             <!-- Single-product end -->
                                                         </td>
-                                                        <td class="product-price">{{ item.product_obj.price }} تومان
+                                                        <td class="product-price">{{ item.product_obj.price|intcomma:False|translate_number }} تومان
                                                         </td>
                                                             <td class="product-quantity">
                                                                 <div class="cart-plus-minus">
@@ -92,7 +95,7 @@
                                                                 </div>
                                                             </td>
                                                         </form>
-                                                        <td class="product-subtotal">{{ item.total_price }} تومان</td>
+                                                        <td class="product-subtotal">{{ item.total_price|intcomma:False|translate_number }} تومان</td>
                                                         <td class="product-remove">
                                                             <a href="{% url 'cart:cart_remove' item.product_obj.id %}"><i class="zmdi zmdi-close"></i></a>
                                                         </td>
@@ -129,19 +132,19 @@
                                                 <table>
                                                     <tbody>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price_no_guarantee }} تومان </td>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price_no_guarantee|intcomma:False|translate_number }} تومان </td>
                                                         <td dir="rtl" class="text-left">جمع کل محصولات</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">{{ cart.get_guaranties_total_price }} تومان </td>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_guaranties_total_price|intcomma:False|translate_number }} تومان </td>
                                                         <td dir="rtl" class="text-left">جمع کل گارانتی و خدمات</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">0 تومان </td>
+                                                        <td dir="rtl" class="text-end">۰ تومان </td>
                                                         <td dir="rtl" class="text-left">مالیات</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price }} تومان </td>
+                                                        <td dir="rtl" class="text-end">{{ cart.get_total_price|intcomma:False|translate_number }} تومان </td>
                                                         <td dir="rtl" class="text-left">جمع کل فاکتور</td>
                                                     </tr>
                                                     </tbody>

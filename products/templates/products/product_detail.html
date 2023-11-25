@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 {% block title %}
     {{ product.title }}
@@ -33,13 +36,13 @@
 											<a href="#"><i class="zmdi zmdi-star"></i></a>
 											<a href="#"><i class="zmdi zmdi-star-half"></i></a>
 											<a href="#"><i class="zmdi zmdi-star-half"></i></a>
-											<span>( 27 Rating )</span>
+											<span>( ۰ امتیاز )</span>
 										</span>
                                 <br>
                                 <h4 dir="rtl" class="post-title floatright">{{ product.title }}</h4>
                             </div>
                             <div class="fix mb-20">
-                                <span dir="rtl" class="pro-price">{{ product.price }} تومان </span>
+                                <span dir="rtl" class="pro-price">{{ product.price|intcomma:False|translate_number }} تومان </span>
                             </div>
                             <div class="color-filter single-pro-color mb-20 clearfix">
                                 <div dir="rtl" class="mb-20">
@@ -124,7 +127,7 @@
                                 <div class="pro-tab-info pro-reviews">
                                     <div class="customer-review mb-60">
                                         {% if reviews %}
-                                            <u><h3 dir="rtl" class="tab-title title-border mb-30"> {{ reviews.count }} بررسی برای {{ product.title }} </h3> </u>
+                                            <u><h3 dir="rtl" class="tab-title title-border mb-30"> {{ reviews.count|translate_number }} بررسی برای {{ product.title }} </h3> </u>
                                             <ul class="product-comments clearfix">
                                                 <li class="mb-30">
                                                     {% for review in product.reviews.all %}
@@ -169,7 +172,7 @@
                                                                         {{ review.get_stars_display }}
                                                                         </span>
                                                                     {% endif %}
-                                                                    <p class="reply-date">{{ review.datetime_created }}</p>
+                                                                    <p class="reply-date">{{ review.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</p>
                                                                 </div>
                                                                 <div class="comment-reply floatright">
                                                                 </div>
@@ -195,10 +198,12 @@
                                                         {% csrf_token %}
                                                         <div class="row">
                                                             <div>
-                                                                <textarea class="custom-textarea" name="body"
-                                                                          placeholder="Your review here..."></textarea>
-                                                                <a dir="rtl"> امتیاز شما به محصول:</a>
-                                                                <select name="stars" class="form-select mt-1"
+                                                                <textarea dir="rtl" class="custom-textarea" name="body"
+                                                                          placeholder="بررسی خود را بنویسید..."></textarea>
+                                                                <div class="floatright">
+                                                                <a class="mt-10" dir="rtl"> امتیاز شما به محصول:</a>
+                                                                    </div>
+                                                                <select dir="rtl" name="stars" class="form-select mt-1 floatright"
                                                                         aria-label="Default select example mt-5"
                                                                         style="width: 220px;">
                                                                     <option value="1">Bad</option>
@@ -211,16 +216,16 @@
                                                                     <input class="form-check-input" name="recommend"
                                                                            type="checkbox" value="checked"
                                                                            id="flexCheckChecked" checked>
-                                                                    <label class="form-check-label"
+                                                                    <label class="form-check-label ml-10"
                                                                            for="flexCheckChecked">
                                                                         این محصول را پیشنهاد میکنم
                                                                     </label>
                                                                 </div>
-                                                                <button type="submit" data-text="ارسال"
-                                                                        class="button-one submit-button mt-20">ارسال
+                                                            </div>
+                                                            <button type="submit" data-text="ارسال"
+                                                                        class="button-one submit-button mt-20 floatright">ارسال
                                                                     بررسی
                                                                 </button>
-                                                            </div>
                                                         </div>
                                                     </form>
                                                 </div>
@@ -230,9 +235,9 @@
                                                 <h6 class="text-uppercase mb-0"><strong>برای ثبت بررسی ابتدا باید وارد
                                                     شوید!</strong></h6>
                                                 <div class="mt-20">
-                                                    <button href="" type="submit" data-text="ورود/ثبت نام"
+                                                    <a href="{% url 'accounts:accounts_hub' %}" type="submit" data-text="ورود/ثبت نام"
                                                             class="submit-button submit-btn-2 button-one">ورود/ثبت نام
-                                                    </button>
+                                                    </a>
                                                     <br>
                                                 </div>
                                             </div>
@@ -243,7 +248,7 @@
                             <div class="tab-pane" id="comments">
                                 <div class="pro-tab-info pro-reviews">
                                     {% if comments %}
-                                        <u><h3 dir="rtl" class="tab-title title-border mb-30">{{ product.product_comments.all.count }}
+                                        <u><h3 dir="rtl" class="tab-title title-border mb-30">{{ product.product_comments.all.count|translate_number }}
                                             نظر برای {{ product.title }}</h3></u>
                                         <ul class="product-comments clearfix">
                                             {% for comment in comments %}
@@ -257,7 +262,7 @@
                                                                 <h5 class="text-uppercase mb-0">
                                                                     <strong>{{ comment.author }}</strong>
                                                                 </h5>
-                                                                <p class="reply-date">{{ comment.datetime_created }}</p>
+                                                                <p class="reply-date">{{ comment.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</p>
                                                             </div>
                                                             {% if user.is_authenticated %}
                                                                 <div class="comment-reply floatright">
@@ -296,7 +301,7 @@
                                                                     <strong>{{ reply.author }}</strong>
                                                                 </h5>
                                                                 Replied To: {{ comment.author }}
-                                                                <p class="reply-date">{{ reply.datetime_created }}</p>
+                                                                <p class="reply-date">{{ reply.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</p>
                                                             </div>
                                                         </div>
                                                         <p class="mb-0 ml-10">{{ reply.body }}</p>
@@ -330,7 +335,7 @@
                                         </ul>
                                     {% else %}
                                         <div class="text-center">
-                                            <h6 class="text-uppercase mb-0"><strong>.نظری برای این پست یافت نشد</strong>
+                                            <h6 class="text-uppercase mb-10"><strong>.نظری برای این پست یافت نشد</strong>
                                             </h6>
                                         </div>
                                     {% endif %}
@@ -360,9 +365,9 @@
                                             <h6 class="text-uppercase mb-0"><strong>برای ثبت نظر ابتدا باید وارد
                                                 شوید!</strong></h6>
                                             <div class="mt-20">
-                                                <button href="" type="submit" data-text="ورود/ثبت نام"
+                                                <a href="{% url 'accounts:accounts_hub' %}" type="submit" data-text="ورود/ثبت نام"
                                                         class="submit-button submit-btn-2 button-one">ورود/ثبت نام
-                                                </button>
+                                                </a>
                                                 <br>
                                             </div>
                                         </div>

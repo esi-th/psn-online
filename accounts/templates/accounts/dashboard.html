@@ -1,4 +1,7 @@
 {% extends '_base.html' %}
+{% load persian_translation_tags %}
+{% load humanize %}
+{% load jalali_tags %}
 
 
 {% block title %}{% endblock title %}
@@ -97,15 +100,15 @@
                                                     </tr>
                                                     <tr>
                                                         <td dir="rtl"
-                                                            class="text-end">{{ user.orders.all|length }}</td>
+                                                            class="text-end">{{ user.orders.all|length|translate_number }}</td>
                                                         <td dir="rtl" class="text-left">تعداد سفارشات</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">{{ user.date_joined }}</td>
+                                                        <td dir="rtl" class="text-end">{{ user.date_joined|to_jalali:'%Y/%B/%d'|translate_number }}</td>
                                                         <td dir="rtl" class="text-left">تاریخ ساخت حساب</td>
                                                     </tr>
                                                     <tr>
-                                                        <td dir="rtl" class="text-end">{{ user.last_login }}</td>
+                                                        <td dir="rtl" class="text-end">{{ user.last_login|to_jalali:'%Y/%B/%d' |translate_number }} ساعت {{ user.last_login|to_jalali:'%H:%M:%S'|translate_number }}</td>
                                                         <td dir="rtl" class="text-left">آخرین ورود به حساب</td>
                                                     </tr>
                                                     <tr>
@@ -153,7 +156,7 @@
                                                         </div>
                                                         <!-- Single-product end -->
                                                         </td>
-                                                        <td class="product-price">{{ item.product.price }}</td>
+                                                        <td class="product-price">{{ item.product.price|intcomma:False|translate_number }} تومان </td>
                                                         {% if item.product.inventory %}
                                                         <td class="product-stock">موجود در انبار</td>
                                                             {% else %}
@@ -213,14 +216,14 @@
                                                             </div>
                                                             <div class="product-info">
                                                                 <h4 class="post-title"><a class="text-light-black"
-                                                                                          href="#">{{ order.id }}</a>
+                                                                                          href="#">{{ order.id|translate_number }}</a>
                                                                 </h4>
                                                             </div>
                                                         </div>
                                                         <!-- Single-product end -->
                                                     </td>
-                                                    <td class="product-price">{{ order.datetime_created }}</td>
-                                                    <td class="product-price">{{ order.price }} تومان</td>
+                                                    <td class="product-price">{{ order.datetime_created|to_jalali:'%Y/%B/%d'|translate_number }}</td>
+                                                    <td class="product-price">{{ order.price|intcomma:False|translate_number }} تومان</td>
                                                     <td class="product-stock">{{ order.order_status }}</td>
                                                     <td class="product-remove">
                                                         <button onclick="window.location.href = '{% url 'accounts:order_detail' order.id %}'"

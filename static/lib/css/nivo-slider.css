@@ -36,6 +36,7 @@
 	top:0px;
 	left:0px;
 	max-width: none;
+    border-radius: 2%;
 }
 .nivo-main-image {
 	display: block !important;
