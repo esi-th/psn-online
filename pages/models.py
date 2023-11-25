@@ -1,4 +1,5 @@
 from django.db import models
+from products.models import Product
 
 
 class ContactUs(models.Model):
@@ -9,3 +10,18 @@ class ContactUs(models.Model):
 
     def __str__(self):
         return f'Name: {self.message_name} | Email: {self.message_email}'
+
+
+class TopSlider(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Product')
+    cover = models.ImageField('Image', upload_to='slider_covers/')
+
+
+class DiscountSlider(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Product')
+    cover = models.ImageField('Image', upload_to='discount_slider_covers/')
+
+
+class TopProduct(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, verbose_name='Product')
+    cover = models.ImageField('Image', upload_to='discount_slider_covers/')

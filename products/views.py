@@ -20,7 +20,7 @@ def products_list_view(request):
     else:
         products = Product.objects.all().order_by('-datetime_created')
 
-    paginator = Paginator(products, 7)
+    paginator = Paginator(products, 6)
     page_num = request.GET.get('page')
 
     try:

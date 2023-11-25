@@ -81,13 +81,13 @@
                             <div class="pagination">
                                 <ul>
                                     {% if products.has_previous %}
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a></li>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}">{{ products.previous_page_number }}</a></li>
                                         <li><a class="active" href="#">{{ products.number }}</a></li>
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.previous_page_number }}"><i class="zmdi zmdi-long-arrow-right"></i></a></li>
                                     {% endif %}
                                     {% if products.has_next %}
-                                        <li><a class="active" href="{% url 'blog:posts_list' %}?page={{ products.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
-                                        <li><a href="{% url 'blog:posts_list' %}?page={{ products.next_page_number }}">{{ products.next_page_number }}</a></li>
+                                        <li><a class="active" href="{% url 'products:products_list' %}?page={{ products.next_page_number }}"><i class="zmdi zmdi-long-arrow-left"></i></a>
+                                        <li><a href="{% url 'products:products_list' %}?page={{ products.next_page_number }}">{{ products.next_page_number }}</a></li>
                                         <li><a class="active" href="#">{{ products.number }}</a></li>
                                     {% endif %}
                                 </li>

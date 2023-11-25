@@ -1,9 +1,1154 @@
 {% extends '_base.html' %}
 
 {% block title %}
-Home
+    خانه
 {% endblock %}
 
 {% block content %}
-    <h1>Home</h1>
+    <!-- SLIDER-BANNER-AREA START -->
+    <section class="slider-banner-area clearfix">
+        <!-- Sidebar-social-media start -->
+        <div class="sidebar-social d-none d-md-block">
+            <div class="table">
+                <div class="table-cell">
+                    <ul>
+                        <li><a href="#" target="_blank" title="Google Plus"><i class="zmdi zmdi-google-plus"></i></a>
+                        </li>
+                        <li><a href="#" target="_blank" title="Twitter"><i class="zmdi zmdi-twitter"></i></a></li>
+                        <li><a href="#" target="_blank" title="Facebook"><i class="zmdi zmdi-facebook"></i></a></li>
+                        <li><a href="#" target="_blank" title="Linkedin"><i class="zmdi zmdi-linkedin"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar-social-media start -->
+        <div class="banner-left floatleft">
+            <!-- Slider-banner start -->
+            <div class="slider-banner">
+                <div class="single-banner banner-1">
+                    <a class="banner-thumb" href="#"><img src="{{ top_product_one.cover.url }}" alt=""/></a>
+                    <span class="pro-label new-label">جدید</span>
+                    <span class="price">{{ top_product_one.price }}</span>
+                    <div style="color: #ffffff" class="banner-brief">
+                        <p href="#" class="mb-0">{{ top_product_one.product.title|truncatewords:3 }} | {{ game.model }}</p>
+                    </div>
+                    <a href="{% url 'products:product_detail' top_product_one.product.id %}" class="button-one font-16px" data-text="سفارش">سفارش</a>
+                </div>
+                <div class="single-banner banner-2">
+                    <a class="banner-thumb" href="#"><img src="{{ top_product_two.cover.url }}" alt=""/></a>
+                    <div style="color: #ffffff" class="banner-brief">
+                        <p class="hidden-md hidden-sm d-none d-md-block">{{ top_product_two.product.description|truncatewords:10 }}</p>
+                        <a href="{% url 'products:product_detail' top_product_two.product.id %}" class="button-one font-16px" data-text="سفارش">سفارش</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Slider-banner end -->
+        </div>
+        <div class="slider-right floatleft">
+            <!-- Slider-area start -->
+            <div class="slider-area">
+                <div class="bend niceties preview-2">
+                    <div id="ensign-nivoslider" class="slides">
+                        {% for slide in top_slider %}
+                            <img src="{{ slide.cover.url }}" alt="{{ slide.product.name }}"
+                                 title="#slider-direction-{{ forloop.counter }}"/>
+                        {% endfor %}
+                    </div>
+                    {% for slide in top_slider %}
+                        <div id="slider-direction-{{ forloop.counter }}" class="slider-direction">
+                            <div class="slider-progress"></div>
+                            <div dir="rtl" class="slider-content t-lfl s-tb slider-1">
+                                <!-- اطلاعات مرتبط با محصول، مثل نام و توضیحات را اینجا نمایش دهید -->
+                                <h2 class="slider-title3">  </h2>
+                                <h2 class="slider-title1">{{ slide.product.title }}</h2>
+                                <p class="slider-pro-brief"> کمپانی سازنده: {{ slide.product.company }} | مدل: {{ slide.product.model }} </p>
+                                <a href="{% url 'products:product_detail' slide.product.id %}" class="button-one style-2 text-uppercase mt-20" data-text="همین الان سفارش بده">همین الان سفارش بده</a>
+                                <!-- ... -->
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Slider-area end -->
+        </div>
+        <!-- Sidebar-social-media start -->
+        <div class="sidebar-account d-none d-md-block">
+            <div class="table">
+                <div class="table-cell">
+                    <ul>
+                        <li><a class="search-open" href="#" title="Search"><i class="zmdi zmdi-search"></i></a></li>
+                        <li><a href="#" title="Login"><i class="zmdi zmdi-lock"></i></a>
+                            <div class="customer-login text-left">
+                                <form action="#">
+                                    <h4 class="title-1 title-border text-uppercase mb-30">Registered customers</h4>
+                                    <p class="text-gray">If you have an account with us, Please login!</p>
+                                    <input type="text" name="email" placeholder="Email here..."/>
+                                    <input type="password" placeholder="Password"/>
+                                    <p><a class="text-gray" href="#">Forget your password?</a></p>
+                                    <button class="button-one submit-button mt-15" data-text="login" type="submit">
+                                        login
+                                    </button>
+                                </form>
+                            </div>
+                        </li>
+                        <li><a href="my-account.html" title="My-Account"><i class="zmdi zmdi-account"></i></a></li>
+                        <li><a href="wishlist.html" title="Wishlist"><i class="zmdi zmdi-favorite"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Sidebar-social-media start -->
+    </section>
+    <!-- End Slider-section -->
+    <!-- sidebar-search Start -->
+    <div class="sidebar-search animated slideOutUp">
+        <div class="table">
+            <div class="table-cell">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2 p-0">
+                            <div class="search-form-wrap">
+                                <button class="close-search"><i class="zmdi zmdi-close"></i></button>
+                                <form action="#">
+                                    <input type="text" placeholder="Search here..."/>
+                                    <button class="search-button" type="submit">
+                                        <i class="zmdi zmdi-search"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- sidebar-search End -->
+    <!-- PRODUCT-AREA START -->
+    <div class="product-area pt-80 pb-35">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title text-center">
+                        <h2 class="title-border">محصولات پر طرفدار</h2>
+                    </div>
+                    <div class="product-slider style-1 arrow-left-right">
+                        {% for product in featured_products %}
+                        <!-- Single-product start -->
+                        <div class="single-product">
+                            <div class="product-img">
+                                <span class="pro-label new-label">new</span>
+                                <a href="{{ product.get_absolute_url }}"><img src="{{ product.cover.url }}" alt=""/></a>
+                                <div class="product-action clearfix">
+                                    <a href="{% url 'accounts:wishlist_add' product.id %}" data-bs-toggle="tooltip" data-placement="top"
+                                       title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                    <a data-bs-toggle="tooltip" data-placement="top" title="Compare"><i
+                                            class="zmdi zmdi-refresh"></i></a>
+                                    <a data-bs-toggle="tooltip" data-placement="top" title="Compare"><i
+                                            class="zmdi zmdi-refresh"></i></a>
+                                    <form id="cart_add_{{ product.id }}" method="POST"
+                                              action="{% url 'cart:cart_add' product.id %}">
+                                            {% csrf_token %}
+                                                <input type="hidden" class="quantity-input"
+                                                       name="quantity" id="qty"
+                                                       value="1"
+                                                       min="1" max="30">
+                                                <input name="guarantee" type="hidden" value="ng">
+                                        </form>
+                                    <a href="javascript:{}" data-bs-toggle="tooltip" data-placement="top"
+                                       onclick="document.getElementById('cart_add_{{ product.id }}').submit(); return false;"
+                                       title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                </div>
+                            </div>
+                            <div class="product-info clearfix">
+                                <div class="fix">
+                                    <h4 dir="rtl" class="post-title floatright"><a href="#">{{ product.title }}</a></h4>
+
+                                </div>
+                                <div dir="rtl" class="fix">
+                                    <p dir="rtl" class="floatleft hidden-sm d-none d-md-block"> مدل: {{ product.model }} </p>
+                                    <span class="pro-price floatright">{{ product.price }} تومان </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Single-product end -->
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PRODUCT-AREA END -->
+    <!-- DISCOUNT-PRODUCT START -->
+    <div class="discount-product-area">
+        <div class="container">
+            <div class="row">
+                <div class="discount-product-slider dots-bottom-right">
+                    <!-- single-discount-product start -->
+                    {% for slide in discount_products %}
+                    <div class="col-lg-12">
+                        <div class="discount-product">
+                            <img src="{{ slide.cover.url }}" alt=""/>
+                            <div class="discount-img-brief">
+{#                                <div class="onsale">#}
+{#                                    <span class="onsale-text"></span>#}
+{#                                    <span class="onsale-price"></span>#}
+{#                                </div>#}
+                                <div class="discount-info ">
+{#                                    <h1 class="text-dark-red d-none d-md-block"></h1>#}
+{#                                    <p class="d-none d-md-block"></p>#}
+                                    <a href="{% url 'products:product_detail' slide.product.id %}" class="button-one font-16px style-3 text-uppercase mt-md-5 mt-70 ml-20"
+                                       data-text="سفارش">سفارش</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <!-- single-discount-product end -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- DISCOUNT-PRODUCT END -->
+    <!-- PURCHASE-ONLINE-AREA START -->
+    <div class="purchase-online-area pt-80">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title text-center">
+                        <h2 class="title-border">محصولات</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <!-- Nav tabs -->
+                    <ul dir="rtl" class="tab-menu nav clearfix">
+                        <li><a href="#discounts" data-bs-toggle="tab">تخفیف ها</a></li>
+                        <li><a href="#most-view" data-bs-toggle="tab">محصولات محبوب</a></li>
+                        <li><a href="#best-seller" data-bs-toggle="tab">محصولات پر فروش</a></li>
+                        <li><a class="active" href="#new-arrivals" data-bs-toggle="tab">محصولات جدید</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <!-- Tab panes -->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="new-arrivals">
+                            <div class="row">
+                                {% for product in products_list %}
+                                <!-- Single-product start -->
+                                <div dir="rtl" class="single-product col-xl-3 col-lg-4 col-md-6">
+                                    <div class="product-img">
+                                        <span class="pro-label new-label">new</span>
+                                        <a href="{{ product.get_absolute_url }}"><img src="{{ product.cover.url }}" alt=""/></a>
+                                        <div class="product-action clearfix">
+                                            <a href="{% url 'accounts:wishlist_add' product.id %}" data-bs-toggle="tooltip" data-placement="top"
+                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"
+                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>
+                                            <a href="" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i
+                                                    class="zmdi zmdi-refresh"></i></a>
+                                    <form id="product_add{{ product.id }}" method="POST"
+                                              action="{% url 'cart:cart_add' product.id %}">
+                                            {% csrf_token %}
+                                                <input type="hidden" class="quantity-input"
+                                                       name="quantity" id="qty"
+                                                       value="1"
+                                                       min="1" max="30">
+                                                <input name="guarantee" type="hidden" value="ng">
+                                        </form>
+                                    <a href="javascript:{}" data-bs-toggle="tooltip" data-placement="top"
+                                       onclick="document.getElementById('product_add{{ product.id }}').submit(); return false;"
+                                       title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-info clearfix">
+                                        <div dir="rtl" class="fix">
+                                            <h4 dir="rtl" class="post-title floatright"><a href="{{ product.get_absolute_url }}">{{ product.title }}</a></h4>
+                                        </div>
+                                        <div dir="rtl" class="fix">
+                                            <p class="floatright hidden-sm">مدل : {{ product.model }}</p>
+                                            <span class="pro-price floatleft">{{ product.price }} تومان </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Single-product end -->
+                                {% endfor %}
+                            </div>
+                        </div>
+{#                        <div class="tab-pane" id="best-seller">#}
+{#                            <div class="row">#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/2.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 56.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/9.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 36.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/8.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/6.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 57.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/4.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 55.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/3.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 65.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/7.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 60.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/5.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="tab-pane" id="most-view">#}
+{#                            <div class="row">#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/1.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 56.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/3.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 36.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/5.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/9.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 57.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/7.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 55.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/5.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 65.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/7.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 60.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/8.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="tab-pane" id="discounts">#}
+{#                            <div class="row">#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/8.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 56.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/9.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 36.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/7.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/6.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 57.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label new-label">new</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/3.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 55.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <span class="pro-label sale-label">Sale</span>#}
+{#                                        <a href="single-product.html"><img src="img/product/4.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 65.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/5.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 60.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                                <!-- Single-product start -->#}
+{#                                <div class="single-product col-xl-3 col-lg-4 col-md-6">#}
+{#                                    <div class="product-img">#}
+{#                                        <a href="single-product.html"><img src="img/product/2.jpg" alt=""/></a>#}
+{#                                        <div class="product-action clearfix">#}
+{#                                            <a href="wishlist.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Wishlist"><i class="zmdi zmdi-favorite-outline"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="modal" data-bs-target="#productModal"#}
+{#                                               title="Quick View"><i class="zmdi zmdi-zoom-in"></i></a>#}
+{#                                            <a href="#" data-bs-toggle="tooltip" data-placement="top" title="Compare"><i#}
+{#                                                    class="zmdi zmdi-refresh"></i></a>#}
+{#                                            <a href="cart.html" data-bs-toggle="tooltip" data-placement="top"#}
+{#                                               title="Add To Cart"><i class="zmdi zmdi-shopping-cart-plus"></i></a>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    <div class="product-info clearfix">#}
+{#                                        <div class="fix">#}
+{#                                            <h4 class="post-title floatleft"><a href="#">dummy Product name</a></h4>#}
+{#                                            <p class="floatright hidden-sm">Furniture</p>#}
+{#                                        </div>#}
+{#                                        <div class="fix">#}
+{#                                            <span class="pro-price floatleft">$ 66.20</span>#}
+{#                                            <span class="pro-rating floatright">#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#														<a href="#"><i class="zmdi zmdi-star-half"></i></a>#}
+{#													</span>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <!-- Single-product end -->#}
+{#                            </div>#}
+{#                        </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- PURCHASE-ONLINE-AREA END -->
+    <!-- BLGO-AREA START -->
+    <div class="blog-area pt-55">
+        <div class="container">
+            <!-- Section-title start -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div dir="rtl" class="section-title text-center">
+                        <h2 class="title-border">آخرین مقالات</h2>
+                    </div>
+                </div>
+            </div>
+            <!-- Section-title end -->
+            <div class="row">
+                <!-- Single-blog start -->
+                    {% for post in posts %}
+                <div class="col-lg-6">
+                    <div class="single-blog mt-30">
+                        <div class="row">
+                            <div class="col-xl-6 col-md-7">
+                                <div class="blog-info">
+                                    <div class="post-meta fix">
+                                        <div class="post-date floatleft"><span class="text-dark-red">{{ post.datetime_created.day }}</span></div>
+                                        <div class="post-year floatleft">
+                                            <p dir="rtl" class="text-uppercase text-dark-red mb-0">{{ post.datetime_created|date:"F" }}, {{ post.datetime_created.year }}</p>
+                                            <h4 dir="rtl" class="post-title"><a href="{{ post.get_absolute_url }}" tabindex="0">{{ post.title }}</a>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <div class="like-share text-center fix">
+                                        <a href="#"><i
+                                                class="zmdi zmdi-collection-text"></i><span> نویسنده: {{ post.author }}</span></a>
+                                        <a href="#"><i
+                                                class="zmdi zmdi-comments"></i><span> نظرات: {{ post.comments.all.count }}</span></a>
+                                        <a href="#"><i
+                                                class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count }}</span></a>
+                                    </div>
+                                    <p dir="rtl"> {{ post.content|truncatewords:25 }}</p>
+                                    <a dir="rtl" href="{{ post.get_absolute_url }}" class="button-2 text-dark-red floatright">ادامه مطلب...</a>
+                                </div>
+                            </div>
+                            <div class="col-xl-6 col-md-5">
+                                <div class="blog-photo">
+                                    <a href="{{ post.get_absolute_url }}"><img src="{{ post.cover.url }}" alt=""/></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- Single-blog end -->
+            </div>
+        </div>
+    </div>
+    <!-- BLGO-AREA END -->
 {% endblock %}
