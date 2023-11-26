@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <title>Logout</title>
+</head>
+<body>
+<section>
+    <div class="form-box">
+        <div class="form-value">
+            <form action="{% url 'account_logout' %}" method="POST">
+                {% csrf_token %}
+                <h2>Logout</h2>
+                <br>
+                <div class="register">
+                    <p>Are Your Sure Want To Logout?</p>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">Logout</button>
+                    <br>
+                </div>
+                <div>
+                    <br>
+                    <button type="button" href=""><a href="{% url 'home' %}">Back To Home</a></button>
+                </div>
+            </form>
+        </div>
+</section>
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</body>
+</html>

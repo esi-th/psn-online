@@ -32,7 +32,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    #'jazzmin',
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     # third party
     'allauth',
     'allauth.account',
-    "phonenumber_field",
+    'phonenumber_field',
+    'ckeditor',
 
     # local
     'pages',
@@ -152,11 +153,8 @@ ACCOUNT_UNIQUE_EMAIL = True
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+TIME_ZONE = 'Asia/Tehran'
 USE_I18N = True
-
 USE_TZ = True
 
 
@@ -167,6 +165,7 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # media
 MEDIA_URL = 'media/'
@@ -177,6 +176,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+# jazzmin icons
 JAZZMIN_SETTINGS = {
     "icons": {
         "auth": "fas fa-users-cog",
@@ -199,6 +200,11 @@ JAZZMIN_SETTINGS = {
         "products.Guarantee": "fas fa-scroll",
         "products.ProductModel": "fab fa-buromobelexperte",
         "products.Review": "fas fa-search",
+        "products.ProductImage": "fas fa-camera-retro",
+        "pages.TopSlider": "fas fa-object-group ",
+        "pages.DiscountSlider": "fas fa-object-group ",
+        "pages.TopProduct": "fas fa-object-group",
+        "accounts.Wishlist": "fas fa-heart"
 
     },
 }

@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
 
+from ckeditor.fields import RichTextField
+
 
 class Guarantee(models.Model):
     NO_GUARANTEE = 'ng'
@@ -70,7 +72,7 @@ class ProductModel(models.Model):
 
 class Product(models.Model):
     title = models.CharField('Title', max_length=255)
-    description = models.TextField('Description')
+    description = RichTextField()
     features = models.JSONField()
     price = models.PositiveIntegerField('Price')
     cover = models.ImageField('Cover', upload_to='product_covers/', blank=True)

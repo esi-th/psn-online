@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.shortcuts import reverse
+from ckeditor.fields import RichTextField
 
 
 class Category(models.Model):
@@ -27,7 +28,7 @@ class Post(models.Model):
         (POST_STATUS_DRAFT, 'Draft'),
     ]
     title = models.CharField('Title', max_length=255)
-    content = models.TextField('Content')
+    content = RichTextField()
     cover = models.ImageField('Cover', upload_to='post_covers/', blank=True)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Author')
     category = models.ForeignKey(Category, on_delete=models.PROTECT, verbose_name='Category')

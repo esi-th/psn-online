@@ -56,7 +56,7 @@
                             </div>
                             <div class="blog-info blog-details-info">
                                 <h4 dir="rtl" class="post-title post-title-2"><a href="#">{{ post.title }}</a></h4>
-                                <p dir="rtl">{{ post.content }}</p>
+                                <p dir="rtl">{{ post.content|safe }}</p>
                                 {% if user.is_authenticated %}
                                 <div>
                                     <br>

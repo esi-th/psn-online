@@ -120,7 +120,7 @@
                             <div class="tab-pane active" id="description">
                                 <div class="pro-tab-info pro-description">
                                     <h3 dir="rtl" class="tab-title title-border mb-30">{{ product.title }}</h3>
-                                    <p dir="rtl">{{ product.description }}</p>
+                                    <p dir="rtl">{{ product.description|safe }}</p>
                                 </div>
                             </div>
                             <div class="tab-pane" id="reviews">
@@ -206,11 +206,11 @@
                                                                 <select dir="rtl" name="stars" class="form-select mt-1 floatright"
                                                                         aria-label="Default select example mt-5"
                                                                         style="width: 220px;">
-                                                                    <option value="1">Bad</option>
-                                                                    <option value="2">Very Bad</option>
-                                                                    <option value="3">Normal</option>
-                                                                    <option value="4">Good</option>
-                                                                    <option value="5" selected>Perfect</option>
+                                                                    <option value="1">خیلی بد</option>
+                                                                    <option value="2">بد</option>
+                                                                    <option value="3">معمولی</option>
+                                                                    <option value="4">خوب</option>
+                                                                    <option value="5" selected>عالی</option>
                                                                 </select>
                                                                 <div class="form-check mt-10">
                                                                     <input class="form-check-input" name="recommend"
