@@ -8,17 +8,27 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 
 
-from .models import Category, Comment, Product, Review
+from .models import Category, Comment, Product, Review, Company
 from .forms import NewCommentForm, NewReviewForm
 
 
 def products_list_view(request):
     category = request.GET.get('category')
+    product_filter = request.GET.get('filter_by')
 
-    if category is not None:
-        products = Product.objects.filter(category__name=category).order_by('datetime_modified')
-    else:
-        products = Product.objects.all().order_by('-datetime_created')
+    min_price = request.GET.get('min_price')
+    max_price = request.GET.get('max_price')
+
+    products = Product.objects.all().order_by('-datetime_created')
+
+    if min_price and max_price:
+        products = products.filter(price__range=(min_price, max_price))
+
+    if product_filter:
+        products = products.filter(company__name__icontains=product_filter)
+
+    if category:
+        products = products.filter(category__name=category)
 
     paginator = Paginator(products, 6)
     page_num = request.GET.get('page')
@@ -31,10 +41,12 @@ def products_list_view(request):
         products = paginator.page(paginator.num_pages)
 
     categories = Category.objects.all()
+    companies = Company.objects.all()
 
     return render(request, 'products/products_list.html', {
         'products': products,
         'categories': categories,
+        'companies': companies,
     })
 
 
