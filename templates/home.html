@@ -33,14 +33,14 @@
                     <span class="pro-label new-label">جدید</span>
                     <span class="price">{{ top_product_one.price }}</span>
                     <div style="color: #ffffff" class="banner-brief">
-                        <p href="#" class="mb-0">{{ top_product_one.product.title|truncatewords:3 }} | {{ game.model }}</p>
+                        <p href="#" class="mb-0">{{ top_product_one.product.title|truncatewords:3|safe }} | {{ game.model }}</p>
                     </div>
                     <a href="{% url 'products:product_detail' top_product_one.product.id %}" class="button-one font-16px" data-text="سفارش">سفارش</a>
                 </div>
                 <div class="single-banner banner-2">
                     <a class="banner-thumb" href="#"><img src="{{ top_product_two.cover.url }}" alt=""/></a>
                     <div style="color: #ffffff" class="banner-brief">
-                        <p class="hidden-md hidden-sm d-none d-md-block">{{ top_product_two.product.description|truncatewords:10 }}</p>
+                        <p class="hidden-md hidden-sm d-none d-md-block">{{ top_product_two.product.description|truncatewords:10|safe }}</p>
                         <a href="{% url 'products:product_detail' top_product_two.product.id %}" class="button-one font-16px" data-text="سفارش">سفارش</a>
                     </div>
                 </div>
@@ -1123,7 +1123,7 @@
                                         <a href="#"><i
                                                 class="zmdi zmdi-favorite"></i><span> لایک: {{ post.likes.count|translate_number }}</span></a>
                                     </div>
-                                    <p dir="rtl"> {{ post.content|truncatewords:25 }}</p>
+                                    <p dir="rtl"> {{ post.content|truncatewords:25|safe }}</p>
                                     <a dir="rtl" href="{{ post.get_absolute_url }}" class="button-2 text-dark-red floatright">ادامه مطلب...</a>
                                 </div>
                             </div>
